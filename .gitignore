@@ -1,21 +1,18 @@
-.project
-*.log
-pids/*
-!.gitignore
-.project
+# maven ignore
+target/
+classes/
+
+
+# eclipse ignore
 .settings/
-**/*.svn
-*.svn
-*.sublime-project
-*.sublime-workspace
-*.swp
-.DS_Store
-.idea
-target/*
-*.classpath
-/bin/
-/build/
-build/*
-build/classes/*
+.project
+.classpath
+
+# idea ignore
+.idea/
+*.ipr
 *.iml
-/target/
+*.iws
+
+# temp ignore
+logs/
