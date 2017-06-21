@@ -20,4 +20,9 @@ public class MockByHttpTest extends SpringBaseTest {
 		serviceA.method_15();
 	}
 	
+	@Test
+	public void testMockByHttpXmlConfigReturnString() {
+		serviceA.method_16();
+	}
+	
 }

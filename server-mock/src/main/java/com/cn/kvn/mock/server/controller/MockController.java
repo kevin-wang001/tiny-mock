@@ -16,5 +16,11 @@ public class MockController {
 		System.out.println("------执行服务端mock方法---------");
 		return "mock return from mock server";
 	}
+	
+	@RequestMapping("com_cn_kvn_mock_local_test_ServiceA/method_16")
+	public String mockMethod_16(){
+		System.out.println("------执行服务端mock方法:mockMethod_16---------");
+		return "mock return from mock server: finish executing mockMethod_16";
+	}
 
 }

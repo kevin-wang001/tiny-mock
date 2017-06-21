@@ -133,14 +133,20 @@ public class ServiceA {
 	/** ===============================@MockByHttp============================================= */
 	@MockByHttp
 	public String method_15(){
-		System.out.println("执行真实方法：method_14");
+		System.out.println("执行真实方法：method_15");
 		return "do method_15------[real method method_15]";
 	}
 	
 	@MockByHttp
 	public String method_16() {
-		System.out.println("执行真实方法：method_14");
-		return "do method_15------[real method method_15]";
+		System.out.println("执行真实方法：method_16");
+		return "do method_16------[real method method_16]";
+	}
+	
+	/** ===============================xml配置类型的MockByHttpItem============================================= */
+	public String method_17() {
+		System.out.println("执行真实方法：method_17");
+		return "do method_17------[real method method_17]";
 	}
 	
 	public static void main(String[] args) {

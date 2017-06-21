@@ -50,6 +50,7 @@ public class MockConfig implements InitializingBean {
 	public void setMockByHttpItemList(List<MockByHttpItem> mockByHttpItemList) {
 		this.mockByHttpItemList = mockByHttpItemList;
 	}
+	@SuppressWarnings("static-access")
 	public void setMockServerAddress(String mockServerAddress) {
 		this.mockServerAddress = mockServerAddress;
 	}
@@ -76,6 +77,7 @@ public class MockConfig implements InitializingBean {
 			Map<String, MockByItem> configMap = Maps.uniqueIndex(mockByItemList, new Function<MockByItem, String>() {
 				@Override
 				public String apply(MockByItem input) {
+					// check 配置
 					input.check();
 					return input.getMockKey();
 				}
@@ -85,7 +87,16 @@ public class MockConfig implements InitializingBean {
 		}
 		
 		if(!CollectionUtils.isEmpty(mockByHttpItemList)){
-			// TODO
+			Map<String, MockByHttpItem> configMap = Maps.uniqueIndex(mockByHttpItemList, new Function<MockByHttpItem, String>() {
+				@Override
+				public String apply(MockByHttpItem input) {
+					// check 配置
+					input.check();
+					return input.getMockKey();
+				}
+			});
+			
+			MOCKBYHTTP_CONFIG_MAP.putAll(configMap);
 		}
 	}
 	

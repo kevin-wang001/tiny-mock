@@ -53,8 +53,15 @@
 			</list>
 		</property>
 		
-		
 		<property name="mockServerAddress" value="http://localhost:8082" />
+		
+		<property name="mockByHttpItemList">
+			<list>
+				<bean class="com.cn.kvn.mock.local.config_mock.MockByHttpXmlItem"
+				p:mockedClass="com.cn.kvn.mock.local.test.ServiceA"
+				p:mockedMethodName="method_17"/>
+			</list>
+		</property>
 
 	</bean>
 
