@@ -1,6 +1,7 @@
 package com.cn.kvn.mock.local.domain;
 
 import com.cn.kvn.mock.local.exception.LocalMockErrorCode;
+import com.cn.kvn.mock.local.processor.MockReturnProcessor;
 
 /**
  * 单个mock配置项，配置时，必须 scope = prototype，各个mock配置互不影响
@@ -8,6 +9,7 @@ import com.cn.kvn.mock.local.exception.LocalMockErrorCode;
  * @author wzy
  * @date 2017年6月19日 上午11:28:51
  */
+@Constraint(processBy = MockReturnProcessor.class)
 public class MockReturnItem extends MockItem {
 	/**
 	 * mock的返回值。

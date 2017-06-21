@@ -7,7 +7,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import com.cn.kvn.mock.local.MockAspect;
-import com.cn.kvn.mock.local.processor.MockReturnProcessor;
 
 /**
  * 含有@MockReturn的方法，将直接返回value
@@ -15,7 +14,6 @@ import com.cn.kvn.mock.local.processor.MockReturnProcessor;
  */
 @Target({METHOD})
 @Retention(RUNTIME)
-@Constraint(processBy = MockReturnProcessor.class)
 public @interface MockReturn {
     /**
      * mock的返回值。复杂对象使用JSON串作为返回值

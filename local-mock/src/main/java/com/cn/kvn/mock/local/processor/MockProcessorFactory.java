@@ -11,9 +11,10 @@ import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 
-import com.cn.kvn.mock.local.annotation_mock.Constraint;
 import com.cn.kvn.mock.local.annotation_mock.MockBy;
+import com.cn.kvn.mock.local.annotation_mock.MockByHttp;
 import com.cn.kvn.mock.local.annotation_mock.MockReturn;
+import com.cn.kvn.mock.local.domain.Constraint;
 import com.cn.kvn.mock.local.domain.MockByItem;
 import com.cn.kvn.mock.local.domain.MockConfig;
 import com.cn.kvn.mock.local.domain.MockItem;
@@ -64,22 +65,21 @@ public final class MockProcessorFactory implements InitializingBean {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public MockProcessor getMatchedProcessor(Method method) {
-		// 1. 对于注解类型的Mock，通过方法上的注解取MockProcessor
+		// 1. 对于注解类型的Mock，创建 MockItem，并添加到MockConfig中
+		MockItem mi = null;
 		MockReturn mr = method.getAnnotation(MockReturn.class);
 		if (mr != null) {
-			Class processorClass = mr.annotationType().getAnnotation(Constraint.class).processBy();
 			MockReturnItem mri = new MockReturnItem();
 			mri.setMockedClass(method.getDeclaringClass());
 			mri.setMockedMethod(method);
 			mri.setReturnValue(mr.value());
 			// putIfAbsent : 加入mockConfig
 			MockConfig.putIfAbsent(mri);
-			return applicationContext.getBean(processorClass);
+			mi = mri;
 		}
 		
 		MockBy mb = method.getAnnotation(MockBy.class);
 		if (mb != null) {
-			Class processorClass = mb.annotationType().getAnnotation(Constraint.class).processBy();
 			MockByItem mbi = new MockByItem();
 			mbi.setMockedClass(method.getDeclaringClass());
 			mbi.setMockedMethod(method);
@@ -88,15 +88,27 @@ public final class MockProcessorFactory implements InitializingBean {
 			mbi.setPassParameter(mb.passParameter());
 			// putIfAbsent : 加入mockConfig
 			MockConfig.putIfAbsent(mbi);
-			return applicationContext.getBean(processorClass);
+			mi = mbi;
 		}
 		
-		// 2. 对于配置类型的Mock，通过配置去取Processor
-		MockItem mi = MockConfig.getMockItem(method);
+		MockByHttp mbh = method.getAnnotation(MockByHttp.class);
+		if(mbh != null){
+			// TODO
+		}
+		
+		// 2. 对于配置类型的Mock，直接获取MockConfig中的MockItem
+		if(mi == null){
+			mi = MockConfig.getMockItem(method);
+		}
+		
 		if(mi == null){
 			return null;
 		}
-		return getMatchedProcessor(mi);
+		
+		// 3. 通过MockItem获取MockProcessor的class，从而获取MockProcessor
+		Class processorClass = mi.getProcessorClass();
+		
+		return applicationContext.getBean(processorClass);
 	}
 	
 	/**

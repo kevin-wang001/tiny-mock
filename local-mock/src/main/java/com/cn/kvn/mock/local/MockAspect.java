@@ -8,6 +8,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 
 import com.cn.kvn.mock.local.annotation_mock.MockBy;
@@ -23,7 +24,7 @@ import com.cn.kvn.mock.local.processor.MockProcessorFactory;
  * @see MockBy
  * @author wzy on 2017/6/1.
  */
-public class MockAspect {
+public class MockAspect implements InitializingBean {
 	private static final Logger logger = LoggerFactory.getLogger(MockAspect.class);
 	/**
 	 * 使用 @MockReturn("RANDOM_EXCEPTION") 时，出现异常的频率
@@ -40,7 +41,7 @@ public class MockAspect {
 	/**
 	 * 是否开启mock
 	 */
-	private boolean openMock = false;
+	protected boolean openMock = false;
 	/**
 	 * 对于@mockBy的接口是否需要缓存
 	 */
@@ -95,5 +96,11 @@ public class MockAspect {
 		// System.out.println("args = [" + isWrapClass(Long.class) + "]");
 		// System.out.println("args = [" + isWrapClass(long.class) + "]");
 	}
+
+	/**
+	 * 留给子类去更改mock配置。比如：根据环境来设置 mock 开关
+	 */
+	@Override
+	public void afterPropertiesSet() throws Exception {}
 
 }
