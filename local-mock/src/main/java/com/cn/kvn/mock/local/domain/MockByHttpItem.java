@@ -1,5 +1,7 @@
 package com.cn.kvn.mock.local.domain;
 
+import java.util.List;
+
 import com.cn.kvn.mock.local.processor.MockByHttpProcessor;
 
 /**
@@ -10,5 +12,30 @@ import com.cn.kvn.mock.local.processor.MockByHttpProcessor;
  */
 @Constraint(processBy = MockByHttpProcessor.class)
 public class MockByHttpItem extends MockItem {
+	/**
+	 * mock 服务的 http url
+	 */
+	private String serverPath;
+	
+	/**
+	 * mock 服务的 http url 参数集
+	 */
+	private List<MockHttpParam> paramList;
+
+	public String getServerPath() {
+		return serverPath;
+	}
+
+	public void setServerPath(String serverPath) {
+		this.serverPath = serverPath;
+	}
+
+	public List<MockHttpParam> getParamList() {
+		return paramList;
+	}
+
+	public void setParamList(List<MockHttpParam> paramList) {
+		this.paramList = paramList;
+	}
 	
 }

@@ -30,6 +30,5 @@ public @interface MockReturn {
     String THROW = "THROW()"; // 抛出一个异常
     String RANDOM = "RANDOM()"; // 返回一个随机对象
     String RANDOM_EXCEPTION = "RANDOM_EXCEPTION()"; // 返回随机对象或抛出一个异常
-
-
+    
 }

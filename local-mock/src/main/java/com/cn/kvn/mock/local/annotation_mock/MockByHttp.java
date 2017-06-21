@@ -13,5 +13,9 @@ import java.lang.annotation.Target;
 @Target({ METHOD })
 @Retention(RUNTIME)
 public @interface MockByHttp {
-	
+	/**
+	 * http url。默认使用mock/class/method?params=xxx
+	 * @return
+	 */
+	String serverPath() default "";
 }

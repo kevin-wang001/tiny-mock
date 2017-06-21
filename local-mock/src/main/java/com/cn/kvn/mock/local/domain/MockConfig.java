@@ -15,6 +15,9 @@ import org.springframework.util.CollectionUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.cn.kvn.mock.local.MockAspect;
+import com.cn.kvn.mock.local.annotation_mock.MockBy;
+import com.cn.kvn.mock.local.annotation_mock.MockByHttp;
+import com.cn.kvn.mock.local.annotation_mock.MockReturn;
 import com.google.common.base.Function;
 import com.google.common.collect.Maps;
 
@@ -92,6 +95,11 @@ public class MockConfig implements InitializingBean {
 	}
 	
 	
+	/**
+	 * 通过Method 获取 MockItem
+	 * @param method
+	 * @return
+	 */
 	public static MockItem getMockItem(Method method){
 		String key = method.getDeclaringClass().getName().concat("#").concat(method.getName()).concat(JSON.toJSONString(method.getParameterTypes()));
 		if(MOCKRETURN_CONFIG_MAP.containsKey(key)){
@@ -104,6 +112,53 @@ public class MockConfig implements InitializingBean {
 		
 		logger.debug("方法[".concat(key).concat("]没有找到相应的mock配置"));
 		return null;
+	}
+	
+	/**
+	 * 根据 method 获取 MockItem，并将 MockItem 设置到相应的 Config_Map 中。<br/>
+	 * @return 返回MockItem。如果 method不需要Mock（即没有配置mock），则返回null
+	 */
+	public static MockItem getAndSetMockItem(Method method){
+		MockItem mi = getMockItem(method);
+		if(mi != null){
+			return mi;
+		}
+		
+		/**
+		 * 注解类型的Mock，第一次从Config_Map中是取不到的。<br/>
+		 * 对于注解类型的Mock，创建 MockItem，并添加到MockConfig中
+		 */
+		MockReturn mr = method.getAnnotation(MockReturn.class);
+		if (mr != null) {
+			MockReturnItem mri = new MockReturnItem();
+			mri.setMockedClass(method.getDeclaringClass());
+			mri.setMockedMethod(method);
+			mri.setReturnValue(mr.value());
+			// putIfAbsent : 加入mockConfig
+			MockConfig.putIfAbsent(mri);
+			mi = mri;
+		}
+		
+		MockBy mb = method.getAnnotation(MockBy.class);
+		if (mb != null) {
+			MockByItem mbi = new MockByItem();
+			mbi.setMockedClass(method.getDeclaringClass());
+			mbi.setMockedMethod(method);
+			mbi.setDelegateClass(mb.useClass());
+			mbi.setDelegateMethodName(mb.useMethod());
+			mbi.setPassParameter(mb.passParameter());
+			// putIfAbsent : 加入mockConfig
+			MockConfig.putIfAbsent(mbi);
+			mi = mbi;
+		}
+		
+		MockByHttp mbh = method.getAnnotation(MockByHttp.class);
+		if(mbh != null){
+			// TODO
+			MockByHttpItem hbhi = new MockByHttpItem();
+		}
+		
+		return mi;
 	}
 	
 	public static void putIfAbsent(MockItem mockItem){
