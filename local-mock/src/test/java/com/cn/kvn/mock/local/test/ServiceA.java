@@ -137,6 +137,11 @@ public class ServiceA {
 		return "do method_15------[real method method_15]";
 	}
 	
+	@MockByHttp
+	public String method_16() {
+		System.out.println("执行真实方法：method_14");
+		return "do method_15------[real method method_15]";
+	}
 	
 	public static void main(String[] args) {
 		Foo foo = new Foo();
@@ -145,6 +150,7 @@ public class ServiceA {
 		foo.setNo("Mock No");
 		System.out.println(JSON.toJSONString(foo));
 	}
+
 	
 	
 	

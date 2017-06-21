@@ -17,6 +17,7 @@ public enum LocalMockErrorCode implements IErrors {
 	MOCKRETURN_PROCESSOR_NOT_FIND(1004, "没有[@MockReturn]对应的Processor"),
 	MOCKRITEM_NOT_SUPPORT(1005, "不支持的MockItem类型 : {0}"),
 	MISSING_CONSTRAINT(1006, "MockItem[{0}]没有设置@Constraint"),
+	HTTP_POST_ERROR(1007, "发送post请求异常"),
 	/**-----------------COMMON ERROR--------------------*/
 	ILLEGAL_PARAM(1999, "参数异常:%s");
 	

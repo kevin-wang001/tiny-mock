@@ -54,7 +54,7 @@
 		</property>
 		
 		
-		<property name="mockServerAddress" value="http://localhost:8080" />
+		<property name="mockServerAddress" value="http://localhost:8082" />
 
 	</bean>
 
