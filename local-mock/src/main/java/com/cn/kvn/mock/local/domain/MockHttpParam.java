@@ -7,7 +7,7 @@ public class MockHttpParam {
 	/**
 	 * mock 服务的http url和参数
 	 */
-	private String serverPath;
+//	private String serverPath;
 	
 	/**
 	 * 参数值
@@ -19,13 +19,13 @@ public class MockHttpParam {
 	 */
 	private Class<?> paramClass;
 
-	public String getServerPath() {
-		return serverPath;
-	}
-
-	public void setServerPath(String serverPath) {
-		this.serverPath = serverPath;
-	}
+//	public String getServerPath() {
+//		return serverPath;
+//	}
+//
+//	public void setServerPath(String serverPath) {
+//		this.serverPath = serverPath;
+//	}
 
 	public String getParam() {
 		return param;

@@ -1,6 +1,7 @@
 package com.cn.kvn.mock.local.processor;
 
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -21,12 +22,15 @@ public final class MockProcessorFactory implements InitializingBean {
 	@Resource
 	private ApplicationContext applicationContext;
 
-	private List<MockProcessor<?>> mockProcessorList;
+	@SuppressWarnings("rawtypes")
+	private List<MockProcessor> mockProcessorList;
 
-	public void setMockProcessorList(List<MockProcessor<?>> mockProcessorList) {
+	@SuppressWarnings("rawtypes")
+	public void setMockProcessorList(List<MockProcessor> mockProcessorList) {
 		this.mockProcessorList = mockProcessorList;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		Map<String, MockOuterProcessor> mockProcessorMap = applicationContext.getBeansOfType(MockOuterProcessor.class);

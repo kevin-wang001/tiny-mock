@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.cn.kvn.mock.local.annotation_mock.MockBy;
+import com.cn.kvn.mock.local.annotation_mock.MockByHttp;
 import com.cn.kvn.mock.local.annotation_mock.MockReturn;
 
 /**
@@ -129,6 +130,12 @@ public class ServiceA {
 	}
 	
 	
+	/** ===============================@MockByHttp============================================= */
+	@MockByHttp
+	public String method_15(){
+		System.out.println("执行真实方法：method_14");
+		return "do method_15------[real method method_15]";
+	}
 	
 	
 	public static void main(String[] args) {
@@ -138,5 +145,8 @@ public class ServiceA {
 		foo.setNo("Mock No");
 		System.out.println(JSON.toJSONString(foo));
 	}
+	
+	
+	
 
 }

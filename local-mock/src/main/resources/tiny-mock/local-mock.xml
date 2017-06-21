@@ -7,12 +7,14 @@
 
 	<bean id="mockReturnProcessor" class="com.cn.kvn.mock.local.processor.MockReturnProcessor" />
 	<bean id="mockByProcessor" class="com.cn.kvn.mock.local.processor.MockByProcessor" />
+	<bean id="mockByHttpProcessor" class="com.cn.kvn.mock.local.processor.MockByHttpProcessor" />
 
 	<bean class="com.cn.kvn.mock.local.processor.MockProcessorFactory">
 		<property name="mockProcessorList">
 			<list>
 				<ref bean="mockReturnProcessor" />
 				<ref bean="mockByProcessor" />
+				<ref bean="mockByHttpProcessor" />
 			</list>
 		</property>
 	</bean>

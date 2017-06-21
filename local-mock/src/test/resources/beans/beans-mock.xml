@@ -52,6 +52,9 @@
 					p:delegateMethodName="mockMethod_14" p:passParameter="true" scope="prototype" />
 			</list>
 		</property>
+		
+		
+		<property name="mockServerAddress" value="http://localhost:8080" />
 
 	</bean>
 

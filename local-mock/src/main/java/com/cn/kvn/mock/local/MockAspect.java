@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 
+import com.alibaba.fastjson.JSON;
 import com.cn.kvn.mock.local.annotation_mock.MockBy;
 import com.cn.kvn.mock.local.annotation_mock.MockReturn;
 import com.cn.kvn.mock.local.domain.MockConfig;
@@ -85,7 +86,9 @@ public class MockAspect implements InitializingBean {
 		}
 
 		logger.info("mock开启.....被mock的方法-->{}, needCache-->{}", method.getDeclaringClass() + "#" + method.getName(), this.needCache);
-		return mockProcessor.process(MockConfig.getMockItem(method), ms.getReturnType(), method, pjp.getArgs());
+		Object response = mockProcessor.process(MockConfig.getMockItem(method), ms.getReturnType(), method, pjp.getArgs());
+		logger.info("mock的返回结果 ===> {}", JSON.toJSONString(response));
+		return response;
 	}
 
 	public static void main(String[] args) {

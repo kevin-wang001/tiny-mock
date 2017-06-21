@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
-import com.cn.kvn.mock.local.MockAspect;
 import com.cn.kvn.mock.local.annotation_mock.MockBy;
 import com.cn.kvn.mock.local.annotation_mock.MockByHttp;
 import com.cn.kvn.mock.local.annotation_mock.MockReturn;
@@ -34,9 +34,12 @@ public class MockConfig implements InitializingBean {
 	// <KEY: className#methodName#arguments, VALUE: MockReturnItem>
 	public static  Map<String, MockReturnItem> MOCKRETURN_CONFIG_MAP = new ConcurrentHashMap<>();
 	public static  Map<String, MockByItem> MOCKBY_CONFIG_MAP = new ConcurrentHashMap<>();
+	public static  Map<String, MockByHttpItem> MOCKBYHTTP_CONFIG_MAP = new ConcurrentHashMap<>();
 
 	private List<MockReturnItem> mockReturnItemList;
 	private List<MockByItem> mockByItemList;
+	private List<MockByHttpItem> mockByHttpItemList;
+	private static String mockServerAddress;
 	
 	public void setMockReturnItemList(List<MockReturnItem> mockReturnItemList) {
 		this.mockReturnItemList = mockReturnItemList;
@@ -44,13 +47,18 @@ public class MockConfig implements InitializingBean {
 	public void setMockByItemList(List<MockByItem> mockByItemList) {
 		this.mockByItemList = mockByItemList;
 	}
-	
+	public void setMockByHttpItemList(List<MockByHttpItem> mockByHttpItemList) {
+		this.mockByHttpItemList = mockByHttpItemList;
+	}
+	public void setMockServerAddress(String mockServerAddress) {
+		this.mockServerAddress = mockServerAddress;
+	}
 	/**
-	 * 将mock 的 List 配置，转成map；并清空 List
+	 * 将mock 的 List 配置，转成map；（并清空 List ？）
 	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		// 1. 加载配置文件中的mock配置
+		// 加载配置文件中的mock配置
 		if(!CollectionUtils.isEmpty(mockReturnItemList)){
 			Map<String, MockReturnItem> configMap = Maps.uniqueIndex(mockReturnItemList, new Function<MockReturnItem, String>() {
 				@Override
@@ -76,22 +84,9 @@ public class MockConfig implements InitializingBean {
 			MOCKBY_CONFIG_MAP.putAll(configMap);
 		}
 		
-		
-		// 2. 加载注解式的mock配置
-//		Map<String, Object> mockReturnAnnotationBeans = applicationContext.getBeansWithAnnotation(MockReturn.class);
-//		Map<String, Object> mockByAnnotationBeans = applicationContext.getBeansWithAnnotation(MockBy.class);
-//		Map<String, MockReturnItem> mockReturnAnnotationMap = Maps.transformValues(mockReturnAnnotationBeans, new Function<Object, MockReturnItem>() {
-//			@Override
-//			public MockReturnItem apply(Object input) {
-//				MockReturn mr = input.getClass().getAnnotation(MockReturn.class);
-//				for(){
-//					MockReturnItem mri = new MockReturnItem();
-//					mri.setMockedClass(input.getClass());
-//					mri.setMockedMethod(mockedMethod);
-//				}
-//				return null;
-//			}
-//		});
+		if(!CollectionUtils.isEmpty(mockByHttpItemList)){
+			// TODO
+		}
 	}
 	
 	
@@ -108,6 +103,10 @@ public class MockConfig implements InitializingBean {
 		
 		if(MOCKBY_CONFIG_MAP.containsKey(key)){
 			return MOCKBY_CONFIG_MAP.get(key);
+		}
+		
+		if(MOCKBYHTTP_CONFIG_MAP.containsKey(key)){
+			return MOCKBYHTTP_CONFIG_MAP.get(key);
 		}
 		
 		logger.debug("方法[".concat(key).concat("]没有找到相应的mock配置"));
@@ -154,8 +153,18 @@ public class MockConfig implements InitializingBean {
 		
 		MockByHttp mbh = method.getAnnotation(MockByHttp.class);
 		if(mbh != null){
-			// TODO
 			MockByHttpItem hbhi = new MockByHttpItem();
+			hbhi.setMockedClass(method.getDeclaringClass());
+			hbhi.setMockedMethod(method);
+			String serverPath = mbh.serverPath();
+			if(StringUtils.isEmpty(serverPath)){ // default serverPath
+				serverPath = mockServerAddress + "/mock/" + method.getDeclaringClass().getName().replaceAll("\\.", "_") + "/" + method.getName();
+			}
+			hbhi.setServerPath(serverPath);
+			hbhi.buildParamList();
+			// putIfAbsent : 加入mockConfig
+			MockConfig.putIfAbsent(hbhi);
+			mi = hbhi;
 		}
 		
 		return mi;
@@ -170,6 +179,11 @@ public class MockConfig implements InitializingBean {
 		} else if(mockItem instanceof MockByItem){
 			if(!MOCKBY_CONFIG_MAP.containsKey(mockItem.getMockKey())){
 				MOCKBY_CONFIG_MAP.put(mockItem.getMockKey(), (MockByItem) mockItem);
+			}
+			return;
+		} else if(mockItem instanceof MockByHttpItem){
+			if(!MOCKBYHTTP_CONFIG_MAP.containsKey(mockItem.getMockKey())){
+				MOCKBYHTTP_CONFIG_MAP.put(mockItem.getMockKey(), (MockByHttpItem) mockItem);
 			}
 			return;
 		}

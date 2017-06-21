@@ -20,7 +20,7 @@ import com.cn.kvn.mock.local.domain.MockItem;
 * @author wzy
 * @date 2017年6月19日 下午2:28:50
 */
-public class MockByProcessor implements MockProcessor<MockByItem> {
+public class MockByProcessor implements MockInnerProcessor<MockByItem> {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Resource

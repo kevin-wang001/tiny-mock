@@ -18,7 +18,7 @@ import com.cn.kvn.mock.tool.MockUtil;
 * @author wzy
 * @date 2017年6月19日 下午2:28:31
 */
-public class MockReturnProcessor implements MockProcessor<MockReturnItem> {
+public class MockReturnProcessor implements MockInnerProcessor<MockReturnItem> {
 	@Resource
 	private MockAspect mockAspect;
 
