@@ -1,6 +1,8 @@
 package com.cn.kvn.mock.local.remote.http_client;
 
-import java.io.IOException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,13 +13,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.cn.kvn.mock.local.domain.MockByHttpItem;
 import com.cn.kvn.mock.local.domain.MockHttpParam;
 import com.cn.kvn.mock.local.exception.LocalMockErrorCode;
+import com.cn.kvn.mock.log.Log;
 
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Request.Builder;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -32,24 +34,7 @@ public class HttpClient {
 		public static OkHttpClient INSTANCE = new OkHttpClient();
 	}
 
-	public static String post(String url, String jsonParam) throws IOException{
-		RequestBody body = RequestBody.create(JSON_MEDIA_TYPE, jsonParam);
-		Request request = new Request.Builder().url(url).post(body).build();
-		Response response = HttpClient.SingletonHolder.INSTANCE.newCall(request).execute();
-		return response.body().string();
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static <T> T post(MockByHttpItem mockItem, Class<T> returnClass) throws IOException{
-		String jsonParam = JSON.toJSONString(mockItem.getParamList());
-		RequestBody body = RequestBody.create(JSON_MEDIA_TYPE, jsonParam);
-		Request request = new Request.Builder().url(mockItem.getServerPath()).post(body).build();
-		Response response = HttpClient.SingletonHolder.INSTANCE.newCall(request).execute();
-		String responseBody = response.body().toString(); // 约定是JSON返回
-		return (T) JSONObject.parseObject(responseBody, mockItem.getMockedMethod().getReturnType());
-	}
-	
-	public static Object post(MockByHttpItem mockItem) throws IOException{
+	public static Object post(MockByHttpItem mockItem) throws Exception{
 		Builder requestBuilder = new Request.Builder().url(mockItem.getServerPath());
 		if(!CollectionUtils.isEmpty(mockItem.getParamList())){
 			FormBody.Builder builder = new FormBody.Builder();
@@ -66,11 +51,17 @@ public class HttpClient {
 		}
 		
 		Class<?> returnType = mockItem.getMockedMethod().getReturnType();
-		if(returnType == Void.TYPE){
+		if(Void.TYPE == returnType){
 			return null;
 		}
 		
 		String responseBody = new String(response.body().bytes(), "UTF-8"); // 约定是JSON返回
+		logger.info(Log.op("okHttp post").msg("remote server 返回值[{0}]", responseBody).toString());
+		if(List.class == returnType){// 兼容对List对象的转型
+			Type pa = ((ParameterizedType) mockItem.getMockedMethod().getGenericReturnType()).getActualTypeArguments()[0];
+			return JSON.parseArray(responseBody, (Class<?>) pa);
+		}
+		
 		return JSONObject.parseObject(responseBody, returnType);
 	}
 }

@@ -50,9 +50,14 @@ public class MockController {
 	
 	
 	@RequestMapping("com-cn-kvn-mock-local-test-ServiceA/method_21")
-	public String mockMethod_21(String msg, @FastJson List<Foo> ls){
+	public List<Foo> mockMethod_21(String msg, @FastJson List<Foo> ls){
 		System.out.println("------执行服务端mock方法:method_21---------msg:" + msg + "---ls:" + JSON.toJSONString(ls));
-		return "hello client!";
+		Foo foo = new Foo();
+		foo.setId(3);
+		foo.setName("name3FromServer");
+		foo.setNo("noFromServer");
+		ls.add(foo);
+		return ls;
 	}
 
 }

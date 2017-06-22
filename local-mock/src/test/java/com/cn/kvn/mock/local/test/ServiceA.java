@@ -163,9 +163,9 @@ public class ServiceA {
 	}
 	
 	@MockByHttp
-	public String method_21(String msg, List<Foo> ls) {
+	public List<Foo> method_21(String msg, List<Foo> ls) {
 		System.out.println("执行真实方法：method_21");
-		return "do method_21------[real method method_21]";
+		return null;
 	}
 	
 	/** ===============================xml配置类型的MockByHttpItem============================================= */

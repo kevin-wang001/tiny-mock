@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 
+import com.alibaba.fastjson.JSON;
 import com.cn.kvn.mock.local.SpringBaseTest;
 import com.cn.kvn.mock.local.test.Foo;
 import com.cn.kvn.mock.local.test.ServiceA;
@@ -59,8 +60,8 @@ public class MockByHttpTest extends SpringBaseTest {
 		foo2.setName("client2");
 		foo2.setNo("clientNo2");
 		List<Foo> list = Lists.newArrayList(foo1, foo2);
-		String rlt = serviceA.method_21("hello!", list);
-		System.out.println(rlt);
+		List<Foo> rlt = serviceA.method_21("hello!", list);
+		System.out.println(JSON.toJSONString(rlt));
 	}
 	
 	
