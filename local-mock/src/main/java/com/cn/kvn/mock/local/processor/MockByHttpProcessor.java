@@ -29,7 +29,9 @@ public class MockByHttpProcessor implements MockInnerProcessor<MockByHttpItem> {
 
 	@Override
 	public Object process(MockByHttpItem mockItem, Class<?> returnType, Method method, Object[] args) throws Exception {
-		logger.info("MockByHttp ---> remoteUrl:{}, args:{}", mockItem.getServerPath(), JSON.toJSONString(mockItem.getParamList()));
+		mockItem.setArgs(args);
+		mockItem.buildParamList();
+		logger.info("MockByHttp ---> remoteUrl:{}, args:{}", mockItem.getServerPath(), mockItem.generateJsonParams());
 		return HttpClient.post(mockItem);
 	}
 	

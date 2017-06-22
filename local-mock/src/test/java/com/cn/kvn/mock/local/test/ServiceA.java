@@ -1,5 +1,7 @@
 package com.cn.kvn.mock.local.test;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -143,11 +145,36 @@ public class ServiceA {
 		return "do method_16------[real method method_16]";
 	}
 	
+	@MockByHttp
+	public void method_18(String msg) {
+		System.out.println("执行真实方法：method_18");
+	}
+	
+	@MockByHttp
+	public String method_19(Foo foo) {
+		System.out.println("执行真实方法：method_19");
+		return "do method_19------[real method method_19]";
+	}
+	
+	@MockByHttp
+	public String method_20(String msg, Foo foo) {
+		System.out.println("执行真实方法：method_20");
+		return "do method_20------[real method method_20]";
+	}
+	
+	@MockByHttp
+	public String method_21(String msg, List<Foo> ls) {
+		System.out.println("执行真实方法：method_21");
+		return "do method_21------[real method method_21]";
+	}
+	
 	/** ===============================xml配置类型的MockByHttpItem============================================= */
 	public String method_17() {
 		System.out.println("执行真实方法：method_17");
 		return "do method_17------[real method method_17]";
 	}
+	
+	
 	
 	public static void main(String[] args) {
 		Foo foo = new Foo();
@@ -156,6 +183,8 @@ public class ServiceA {
 		foo.setNo("Mock No");
 		System.out.println(JSON.toJSONString(foo));
 	}
+
+	
 
 	
 	

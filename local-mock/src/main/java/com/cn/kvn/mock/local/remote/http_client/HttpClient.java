@@ -2,20 +2,23 @@ package com.cn.kvn.mock.local.remote.http_client;
 
 import java.io.IOException;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cn.kvn.mock.local.domain.MockByHttpItem;
+import com.cn.kvn.mock.local.domain.MockHttpParam;
 import com.cn.kvn.mock.local.exception.LocalMockErrorCode;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Request.Builder;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
+
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Request.Builder;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
 * @author wzy
@@ -47,20 +50,27 @@ public class HttpClient {
 	}
 	
 	public static Object post(MockByHttpItem mockItem) throws IOException{
-		String jsonParam = JSON.toJSONString(mockItem.getParamList());
-		Builder builder = new Request.Builder().url(mockItem.getServerPath());
-		if(StringUtils.isNotBlank(jsonParam) && !"null".equals(jsonParam.toLowerCase())){
-			RequestBody body = RequestBody.create(JSON_MEDIA_TYPE, jsonParam);
-			builder.post(body);
+		Builder requestBuilder = new Request.Builder().url(mockItem.getServerPath());
+		if(!CollectionUtils.isEmpty(mockItem.getParamList())){
+			FormBody.Builder builder = new FormBody.Builder();
+			for(MockHttpParam param : mockItem.getParamList()){
+				builder.add(param.getParamName(), param.getParam());
+			}
+			requestBuilder.post(builder.build());
 		}
-		Request request = builder.build();
+		Request request = requestBuilder.build();
 		Response response = HttpClient.SingletonHolder.INSTANCE.newCall(request).execute();
-		if(response.code() != 200){
+		if(!response.isSuccessful()){
 			logger.error("调用[{}]返回状态异常:response={}", mockItem.getServerPath(), response.toString());
 			throw LocalMockErrorCode.HTTP_POST_ERROR.exp();
 		}
-		String responseBody = new String(response.body().bytes(), "UTF-8"); // 约定是JSON返回
 		
-		return JSONObject.parseObject(responseBody, mockItem.getMockedMethod().getReturnType());
+		Class<?> returnType = mockItem.getMockedMethod().getReturnType();
+		if(returnType == Void.TYPE){
+			return null;
+		}
+		
+		String responseBody = new String(response.body().bytes(), "UTF-8"); // 约定是JSON返回
+		return JSONObject.parseObject(responseBody, returnType);
 	}
 }

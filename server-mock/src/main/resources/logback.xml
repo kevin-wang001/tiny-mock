@@ -57,44 +57,6 @@
 		<appender-ref ref="commonAppender" />
 	</appender>
 
-	<!-- trace log -->
-	<appender name="traceAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>${log.base}/trace.log</File>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>${log.base}/trace_%d{yyyy-MM-dd}-%i.log</FileNamePattern>
-			<maxHistory>10</maxHistory>
-			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<MaxFileSize>200MB</MaxFileSize>
-			</timeBasedFileNamingAndTriggeringPolicy>
-		</rollingPolicy>
-		<layout class="ch.qos.logback.classic.PatternLayout">
-			<Pattern>%m%n</Pattern>
-		</layout>
-	</appender>
-
-	<appender name="asyncTraceAppender" class="ch.qos.logback.classic.AsyncAppender">
-		<discardingThreshold>0</discardingThreshold>
-		<queueSize>1024</queueSize>
-		<appender-ref ref="traceAppender" />
-	</appender>
-
-	<!-- logger -->
-	<logger name="traceLogger" additivity="false">
-		<level value="info" />
-		<appender-ref ref="asyncTraceAppender" />
-	</logger>
-
-	<logger name="com.netease.cloud">
-		<level value="info" />
-	</logger>
-
-	<logger name="com.baidu.disconf.client.store.aspect.DisconfAspectJ">
-		<level value="warn" />
-	</logger>
-
-
-	<logger name="dao" level="DEBUG" />
-
 
 	<root>
 		<level value="info" />

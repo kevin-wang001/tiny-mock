@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.cn.kvn.mock.log.Log;
+import com.cn.kvn.mock.log.LogOp;
 
 /**
  * http response的切面
@@ -16,10 +18,6 @@ import com.alibaba.fastjson.JSON;
  *
  */
 public class ResponseAspect {
-	public static final String WEB_REQ = "http.req";
-    public static final String WEB_RESP = "http.resp";
-    public static final String WEB_REQ_TIME = "req.time";
-
     private final Logger logger = LoggerFactory.getLogger(getClass());
     
     /**
@@ -51,10 +49,9 @@ public class ResponseAspect {
     private void doLog(Object retValue) {
         try{
             String json = JSON.toJSONString(retValue);
-            
-            logger.info(WEB_RESP + "|ResponseBody:" + json);
+            logger.info(Log.op(LogOp.WEB_RESP).msg("ResponseBody:" + json).toString());
         }catch(Throwable ex) {
-            logger.debug(WEB_RESP + "|retValue:{}, exception occur:{}", retValue, ex);
+        	logger.debug(Log.op(LogOp.WEB_RESP).msg("exception occur:").kv("retValue", retValue).toString(), ex);
         }
     }
 

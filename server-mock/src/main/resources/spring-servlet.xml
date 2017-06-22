@@ -16,7 +16,7 @@
 	<mvc:annotation-driven>
 		<mvc:argument-resolvers>
 			<!-- 重写ArgumentResolver，支持对页面端的复杂参数传到后台时转成相应的对象 -->
-			<bean class="com.cn.kvn.mock.server.framework.FastJsonArgumentResolver" />
+			<bean class="com.cn.kvn.mock.server.framework.param_resolve.FastJsonArgumentResolver" />
 		</mvc:argument-resolvers>
 		<mvc:message-converters register-defaults="false">
 			<bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">

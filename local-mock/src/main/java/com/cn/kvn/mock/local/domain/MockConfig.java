@@ -169,7 +169,7 @@ public class MockConfig implements InitializingBean {
 			hbhi.setMockedMethod(method);
 			String serverPath = mbh.serverPath();
 			if(StringUtils.isEmpty(serverPath)){ // default serverPath
-				serverPath = mockServerAddress + "/mock/" + method.getDeclaringClass().getName().replaceAll("\\.", "_") + "/" + method.getName();
+				serverPath = mockServerAddress + "/mock/" + method.getDeclaringClass().getName().replaceAll("\\.", "-") + "/" + method.getName();
 			}
 			hbhi.setServerPath(serverPath);
 			hbhi.buildParamList();

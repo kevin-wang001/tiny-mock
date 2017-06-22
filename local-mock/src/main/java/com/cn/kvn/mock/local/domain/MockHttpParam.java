@@ -10,6 +10,11 @@ public class MockHttpParam {
 //	private String serverPath;
 	
 	/**
+	 * 参数名称：默认取方法上的方法名
+	 */
+	private String paramName;
+	
+	/**
 	 * 参数值
 	 */
 	private String param;
@@ -41,6 +46,14 @@ public class MockHttpParam {
 
 	public void setParamClass(Class<?> paramClass) {
 		this.paramClass = paramClass;
+	}
+
+	public String getParamName() {
+		return paramName;
+	}
+
+	public void setParamName(String paramName) {
+		this.paramName = paramName;
 	}
 
 }

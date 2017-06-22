@@ -4,9 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.util.CollectionUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.cn.kvn.mock.local.processor.MockByHttpProcessor;
+import com.cn.kvn.mock.tool.AsmUtils;
 import com.google.common.collect.Lists;
 
 /**
@@ -37,13 +39,34 @@ public class MockByHttpItem extends MockItem {
 			return;
 		}
 		
+		// asm 获取参数名称
+		String[] paramNames = AsmUtils.getMethodParameterNamesByAsm4(this.mockedClass, this.mockedMethod);
 		paramList = Lists.newArrayList();
-		for(Object arg : args){
+		for(int i=0; i<args.length; i++){
 			MockHttpParam param = new MockHttpParam();
-			param.setParamClass(arg.getClass());
-			param.setParam(JSON.toJSONString(arg)); // 使用JSON的方式序列化
+			param.setParamClass(args[i].getClass());
+			param.setParamName(paramNames[i]);
+			param.setParam(JSON.toJSONString(args[i])); // 使用JSON的方式序列化
 			paramList.add(param);
 		}
+	}
+	
+	/**
+	 * 构造spring mvc支持的json格式
+	 * @return
+	 */
+	public String generateJsonParams(){
+		if(CollectionUtils.isEmpty(paramList)){
+			return null;
+		}
+		
+		StringBuffer json = new StringBuffer("{");
+		for(MockHttpParam param : paramList){
+			json.append("\"").append(param.getParamName()).append("\":").append(param.getParam()).append(",");
+		}
+		json.deleteCharAt(json.length() - 1);
+		json.append("}");
+		return json.toString();
 	}
 	
 

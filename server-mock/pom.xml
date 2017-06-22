@@ -8,6 +8,9 @@
 	</parent>
 	<artifactId>server-mock</artifactId>
 	<packaging>war</packaging>
+	<properties>
+		<logback.version>1.1.2</logback.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -53,11 +56,6 @@
 			<artifactId>aspectjtools</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-
 		<!-- servlet & jsp -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -72,6 +70,41 @@
 			<artifactId>jsp-api</artifactId>
 		</dependency>
 		<!-- servlet & jsp end -->
+
+		<!-- logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.janino</groupId>
+			<artifactId>janino</artifactId>
+			<version>2.7.8</version>
+		</dependency>
+		<!-- logging end -->
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
 
 	</dependencies>
 

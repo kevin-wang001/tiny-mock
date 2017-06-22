@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+	<bean id="compositeFilter" class="com.cn.kvn.mock.server.framework.filter.CompositeFilter">
+		<property name="filters">
+			<list>
+				<bean class="org.springframework.web.filter.CharacterEncodingFilter" p:encoding="UTF-8" />
+				<!-- 需要在web.xml中配置filter : DelegatingFilterProxy -->
+				<bean class="com.cn.kvn.mock.server.framework.filter.HttpServletHolderFilter"/>
+				<bean class="com.cn.kvn.mock.server.framework.filter.LoggerMDCFilter"/>
+				<bean class="com.cn.kvn.mock.server.framework.filter.PageDigestFilter"/>
+			</list>
+		</property>
+	</bean>
+</beans>
