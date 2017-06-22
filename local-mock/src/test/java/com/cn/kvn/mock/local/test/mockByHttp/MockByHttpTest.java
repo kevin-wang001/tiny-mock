@@ -15,11 +15,15 @@ public class MockByHttpTest extends SpringBaseTest {
 	@Resource
 	ServiceA serviceA;
 	
+	/***********************************@MockByHttp************************************/
 	@Test
 	public void testMockByHttpReturnString() {
 		serviceA.method_15();
 	}
 	
+	
+	
+	/***********************************xml config************************************/
 	@Test
 	public void testMockByHttpXmlConfigReturnString() {
 		serviceA.method_16();
