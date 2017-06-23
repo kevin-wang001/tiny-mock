@@ -4,16 +4,16 @@
 tiny-mock是一个轻量mock框架，主要为了实现mock与真实代码解耦。
 
 # 特性
-tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。
-如果只为了在调用某一个接口时，不走真实逻辑，而走本地的mock分支的话，使用local-mock就能够满足你的要求。
-如果想在调用某一个接口时，不走真实逻辑，而去调用一个第三方的mock服务的话，那么就要使用local-mock配合server-mock一起使用，就能够达到目的。
+tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。  
+如果只为了在调用某一个接口时，不走真实逻辑，而走本地的mock分支的话，使用local-mock就能够满足你的要求。  
+如果想在调用某一个接口时，不走真实逻辑，而去调用一个第三方的mock服务的话，那么就要使用local-mock配合server-mock一起使用，就能够达到目的。  
 
 * local-mock 提供本地mock的轻量实现
 * server-mock 提供服务mock的轻量实现
 * mock支持注解和xml配置两种方式，可以随意选择
 
 ## I. local-mock
-提供了三种注解：@MockReturn、@MockBy、@MockByHttp。
+提供了三种注解：@MockReturn、@MockBy、@MockByHttp。  
 其中也对应了三种xml配置MockReturnXmlItem、MockByXmlItem、MockByHttpXmlItem
 
 ### 1. @MockReturn（MockReturnXmlItem）
@@ -98,7 +98,7 @@ aop采用Spring AOP <br/>
 http采用OkHttp <br/>
 
 # Quick Start
-可以参考local-mock里面的test类：MockByTest.java、MockReturnTest.java、MockByHttpTest.java
+可以参考local-mock里面的test类：MockByTest.java、MockReturnTest.java、MockByHttpTest.java  
 **MockReturn eg:**
 >
 	// 注解形式
