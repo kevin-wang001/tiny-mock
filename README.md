@@ -17,13 +17,7 @@ tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。
 其中也对应了三种xml配置MockReturnXmlItem、MockByXmlItem、MockByHttpXmlItem
 
 ### 1. @MockReturn（MockReturnXmlItem）
-使用在真实接口上，调用真实接口时，直接使用用户指定的值返回。
-**特定值：**
->
-	String THROW = "THROW()"; // 抛出一个异常
-    String RANDOM = "RANDOM()"; // 返回一个随机对象
-    String RANDOM_EXCEPTION = "RANDOM_EXCEPTION()"; // 返回随机对象或抛出一个异常
-
+使用在真实接口上，调用真实接口时，直接使用用户指定的值返回。  
 >
 	/**
 	 * 含有@MockReturn的方法，将直接返回value
@@ -37,11 +31,13 @@ tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。
 	     * @see MockAspect
 	     */
 	    String value();
-	    String THROW = "THROW()"; // 抛出一个异常
-	    String RANDOM = "RANDOM()"; // 返回一个随机对象
-	    String RANDOM_EXCEPTION = "RANDOM_EXCEPTION()"; // 返回随机对象或抛出一个异常
 	}
 
+**特定值：**
+>
+	String THROW = "THROW()"; // 抛出一个异常
+    String RANDOM = "RANDOM()"; // 返回一个随机对象
+    String RANDOM_EXCEPTION = "RANDOM_EXCEPTION()"; // 返回随机对象或抛出一个异常
 
 ### 2. @MockBy（MockByXmlItem）
 使用在真实接口上，通过第三个类来代理执行真实逻辑，然后返回。
