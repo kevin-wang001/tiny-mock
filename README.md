@@ -101,13 +101,16 @@ server-mock采用Spring MVC搭建，配合Tomcat一起部署。
 * 后面会增加server-mock返回异常给local-mock
 * 未来可以开发server-mock的配置页面，通过页面来配置mock服务，减少开发量，更加方便
 
-# 设计图
+# 设计
+* 设计图
 ![tiny-mock实现原理图](mock方案.png)
-
+* 技术
+aop采用Spring AOP
+http采用OkHttp
 
 # Quick Start
 可以参考local-mock里面的test类：MockByTest.java、MockReturnTest.java、MockByHttpTest.java
-**MockReturn eg:**
+* MockReturn eg:
 ```
 // 注解形式
 	@MockReturn("mock_123")
@@ -132,7 +135,7 @@ server-mock采用Spring MVC搭建，配合Tomcat一起部署。
 	p:mockedMethodName="method_12" p:returnValue="RANDOM()" scope="prototype" />
 ```
 
-**MockBy eg:**
+* MockBy eg:
 ```
 // 注解形式
 	@MockBy(useClass = MockServiceA.class, useMethod = "mockMethod_4")
@@ -151,7 +154,7 @@ server-mock采用Spring MVC搭建，配合Tomcat一起部署。
 	
 ```
 
-**MockByHttp eg:**
+* MockByHttp eg:
 ```
 // 注解形式
 	@MockByHttp
