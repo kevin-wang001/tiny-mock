@@ -19,13 +19,12 @@ tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。
 ### 1. @MockReturn（MockReturnXmlItem）
 使用在真实接口上，调用真实接口时，直接使用用户指定的值返回。
 **特定值：**
-```
+>
 	String THROW = "THROW()"; // 抛出一个异常
     String RANDOM = "RANDOM()"; // 返回一个随机对象
     String RANDOM_EXCEPTION = "RANDOM_EXCEPTION()"; // 返回随机对象或抛出一个异常
-```
 
-```
+>
 	/**
 	 * 含有@MockReturn的方法，将直接返回value
 	 * @author Created by wzy on 2017/6/1.
@@ -38,17 +37,15 @@ tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。
 	     * @see MockAspect
 	     */
 	    String value();
-	
 	    String THROW = "THROW()"; // 抛出一个异常
 	    String RANDOM = "RANDOM()"; // 返回一个随机对象
 	    String RANDOM_EXCEPTION = "RANDOM_EXCEPTION()"; // 返回随机对象或抛出一个异常
 	}
-```
 
 
 ### 2. @MockBy（MockByXmlItem）
 使用在真实接口上，通过第三个类来代理执行真实逻辑，然后返回。
-```
+>
 	/**
 	 * 含有@MockBy注解的方法，将使用useClass中的useMethod方法的返回值来返回 
 	 * @author Created by wzy on 2017/6/1.
@@ -60,23 +57,20 @@ tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。
 		 * useClass : 用于mock的class
 		 */
 		Class<?> useClass();
-	
 		/**
 		 * 用于mock的method名字。
 		 */
 		String useMethod();
-	
 		/**
 		 * 是否将真实方法的参数往mock方法中传递，默认false
 		 */
 		boolean passParameter() default false;
 	}
-```
 
 ### 3. @MockByHttp（MockByHttpXmlItem）
 使用第三方Mock服务来代理执行真实逻辑，然后返回mock的结果。
 为了设计的轻量和对异构系统的支持友好，这里使用了http的方式来调用第三方mock服务。（可以配合mock-server一起使用，也可以自开发mock-server）
-```
+>
 	/**
 	 * 使用http接口来mock，实现mock服务，解耦mock
 	 * @author Created by wzy on 2017/6/20.
@@ -90,7 +84,6 @@ tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。
 		 */
 		String serverPath() default "";
 	}
-```
 
 ## II. server-mock
 接收local-client发送过来的mock请求，并分发到相应的mock请求处理类，进行处理，然后返回mock的执行结果。
@@ -104,21 +97,21 @@ server-mock采用Spring MVC搭建，配合Tomcat一起部署。
 # 设计
 * 设计图
 ![tiny-mock实现原理图](mock方案.png)
-* 技术
-aop采用Spring AOP
-http采用OkHttp
+* 技术 <br/>
+aop采用Spring AOP <br/>
+http采用OkHttp <br/>
 
 # Quick Start
 可以参考local-mock里面的test类：MockByTest.java、MockReturnTest.java、MockByHttpTest.java
-* MockReturn eg:
-```
-// 注解形式
+**MockReturn eg:**
+>
+	// 注解形式
 	@MockReturn("mock_123")
 	public String method_2() {
 		System.out.println("执行真实方法：method_2");
 		return "do method_2------[real method methodA_2]";
 	}
-	
+>	
 	@MockReturn(MockReturn.RANDOM)
 	public Foo method_9() {
 		Foo foo = new Foo();
@@ -128,23 +121,23 @@ http采用OkHttp
 		System.out.println("执行真实方法：method_9");
 		return foo;
 	}
-	
-// 配置形式 （具体参考src/test/resources/beans/beans-mock.xml）
+>	
+	// 配置形式 （具体参考src/test/resources/beans/beans-mock.xml）
 	<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
 	p:mockedClass="com.cn.kvn.mock.local.test.ServiceA"
 	p:mockedMethodName="method_12" p:returnValue="RANDOM()" scope="prototype" />
-```
 
-* MockBy eg:
-```
-// 注解形式
+
+**MockBy eg:**
+>
+	// 注解形式
 	@MockBy(useClass = MockServiceA.class, useMethod = "mockMethod_4")
 	public String method_4() {
 		System.out.println("执行真实方法：method_4");
 		return "do method_4------[real method methodA_4]";
 	}
-
-// 配置形式 （具体参考src/test/resources/beans/beans-mock.xml）
+>
+	// 配置形式 （具体参考src/test/resources/beans/beans-mock.xml）
 	<bean
 	class="com.cn.kvn.mock.local.config_mock.MockByXmlItem"
 	p:mockedClass="com.cn.kvn.mock.local.test.ServiceA"
@@ -152,19 +145,17 @@ http采用OkHttp
 	p:delegateClass="com.cn.kvn.mock.local.test.MockServiceA"
 	p:delegateMethodName="mockMethod_14" p:passParameter="true" scope="prototype" />
 	
-```
 
-* MockByHttp eg:
-```
-// 注解形式
+**MockByHttp eg:**
+>
+	// 注解形式
 	@MockByHttp
 	public String method_15(){
 		System.out.println("执行真实方法：method_15");
 		return "do method_15------[real method method_15]";
 	}
-
-// 配置形式 （具体参考src/test/resources/beans/beans-mock.xml）
+>
+	// 配置形式 （具体参考src/test/resources/beans/beans-mock.xml）
 	<bean class="com.cn.kvn.mock.local.config_mock.MockByHttpXmlItem"
 	p:mockedClass="com.cn.kvn.mock.local.test.ServiceA"
 	p:mockedMethodName="method_17"/>
-```
