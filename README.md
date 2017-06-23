@@ -97,8 +97,9 @@ tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。
 默认是将local-client的mock请求路由到http://xxx.xxx.xxx:xx/mock/class/method?params=xxx
 当然，也可以指定路由地址。
 server-mock采用Spring MVC搭建，配合Tomcat一起部署。
-**未来可以开发server-mock的配置页面，通过页面来配置mock服务，减少开发量，更加方便**
-
+### 构想
+* 后面会增加server-mock返回异常给local-mock
+* 未来可以开发server-mock的配置页面，通过页面来配置mock服务，减少开发量，更加方便
 
 # 设计图
 ![tiny-mock实现原理图](mock方案.png)

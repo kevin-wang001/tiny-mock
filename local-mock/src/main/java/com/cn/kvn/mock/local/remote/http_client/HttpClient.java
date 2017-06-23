@@ -39,7 +39,7 @@ public class HttpClient {
 		if(!CollectionUtils.isEmpty(mockItem.getParamList())){
 			FormBody.Builder builder = new FormBody.Builder();
 			for(MockHttpParam param : mockItem.getParamList()){
-				builder.add(param.getParamName(), param.getParam());
+				builder.add(param.getParamName(), param.getParamValue());
 			}
 			requestBuilder.post(builder.build());
 		}

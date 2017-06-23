@@ -1,6 +1,5 @@
 package com.cn.kvn.mock.local.domain;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -46,7 +45,7 @@ public class MockByHttpItem extends MockItem {
 			MockHttpParam param = new MockHttpParam();
 			param.setParamClass(args[i].getClass());
 			param.setParamName(paramNames[i]);
-			param.setParam(JSON.toJSONString(args[i])); // 使用JSON的方式序列化
+			param.setParamValue(JSON.toJSONString(args[i])); // 使用JSON的方式序列化
 			paramList.add(param);
 		}
 	}
@@ -62,7 +61,7 @@ public class MockByHttpItem extends MockItem {
 		
 		StringBuffer json = new StringBuffer("{");
 		for(MockHttpParam param : paramList){
-			json.append("\"").append(param.getParamName()).append("\":").append(param.getParam()).append(",");
+			json.append("\"").append(param.getParamName()).append("\":").append(param.getParamValue()).append(",");
 		}
 		json.deleteCharAt(json.length() - 1);
 		json.append("}");
