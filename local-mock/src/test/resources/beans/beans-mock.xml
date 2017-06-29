@@ -22,19 +22,20 @@
 
 
 	<!-- 如果只使用mock注解，下面可以不配置。如果要使用配置类型的mock，使用下面注解 -->
+	<!-- spring 内部bean是prototype的，所以不用担心MockItem的bean被后面的覆盖，因此可以不配置 scope="prototype" -->
 	<bean class="com.cn.kvn.mock.local.domain.MockConfig">
 		<property name="mockReturnItemList">
 			<list>
 				<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
 					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_12()"
-					p:returnValue="RANDOM()" scope="prototype" />
+					p:returnValue="RANDOM()" />
 				<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
 					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_13()"
-					p:returnValue="123" scope="prototype" />
+					p:returnValue="123" />
 
 				<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
 					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_13(java.lang.String)"
-					p:returnValue="456" scope="prototype" />
+					p:returnValue="456" />
 			</list>
 		</property>
 
@@ -42,8 +43,7 @@
 			<list>
 				<bean class="com.cn.kvn.mock.local.config_mock.MockByXmlItem"
 					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_14(java.lang.String,com.cn.kvn.mock.local.test.Foo)"
-					p:delegateMethodFullPath="com.cn.kvn.mock.local.test.MockServiceA#mockMethod_14(java.lang.String,com.cn.kvn.mock.local.test.Foo)"
-					scope="prototype" />
+					p:delegateMethodFullPath="com.cn.kvn.mock.local.test.MockServiceA#mockMethod_14(java.lang.String,com.cn.kvn.mock.local.test.Foo)" />
 			</list>
 		</property>
 
@@ -52,8 +52,7 @@
 		<property name="mockByHttpItemList">
 			<list>
 				<bean class="com.cn.kvn.mock.local.config_mock.MockByHttpXmlItem"
-					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_17()"
-					scope="prototype" />
+					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_17()" />
 			</list>
 		</property>
 
