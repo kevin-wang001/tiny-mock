@@ -18,7 +18,9 @@ import com.alibaba.fastjson.JSON;
 import com.cn.kvn.mock.local.annotation_mock.MockBy;
 import com.cn.kvn.mock.local.annotation_mock.MockByHttp;
 import com.cn.kvn.mock.local.annotation_mock.MockReturn;
+import com.cn.kvn.mock.local.exception.LocalMockErrorCode;
 import com.google.common.base.Function;
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 
 /**
@@ -154,9 +156,7 @@ public class MockConfig implements InitializingBean {
 			MockByItem mbi = new MockByItem();
 			mbi.setMockedClass(method.getDeclaringClass());
 			mbi.setMockedMethod(method);
-			mbi.setDelegateClass(mb.useClass());
-			mbi.setDelegateMethodName(mb.useMethod());
-			mbi.setPassParameter(mb.passParameter());
+			fillDelegateInfo(mbi, mb);
 			// putIfAbsent : 加入mockConfig
 			MockConfig.putIfAbsent(mbi);
 			mi = mbi;
@@ -179,6 +179,52 @@ public class MockConfig implements InitializingBean {
 		}
 		
 		return mi;
+	}
+	
+	/**
+	 * 填充Delegate的信息
+	 * @param mbi
+	 * @param mb
+	 */
+	private static void fillDelegateInfo(MockByItem mbi, MockBy mb) {
+		String _delegateMethodFullPath = mb.delegateMethodFullPath().replaceAll("\\s", "");
+		if(Strings.isNullOrEmpty(_delegateMethodFullPath)){
+			throw LocalMockErrorCode.ILLEGAL_PARAM.exp("[delegateMethodFullPath]不能为空");
+		}
+		
+		String[] items = _delegateMethodFullPath.split("#");
+		if(items.length != 2){
+			throw LocalMockErrorCode.ILLEGAL_PARAM.exp("[delegateMethodFullPath=" + _delegateMethodFullPath + "]配置错误，含有多个'#'");
+		}
+		// 校验方法串
+		if(items[1].matches("[0-9a-zA-Z_]+\\(([0-9a-zA-Z_.]*,)?[0-9a-zA-Z_.]*?\\)") == false){
+			throw LocalMockErrorCode.ILLEGAL_PARAM.exp("[delegateMethodFullPath=" + _delegateMethodFullPath + "]配置错误，方法格式错误->" + items[1]);
+		}
+		
+		try {
+			mbi.setDelegateClass(Class.forName(items[0]));
+		} catch (ClassNotFoundException e) {
+			throw LocalMockErrorCode.ILLEGAL_PARAM.exp("[delegateMethodFullPath=" + _delegateMethodFullPath + "]配置错误，找不到被代理的类", e);
+		}
+		
+		String[] methodItems = items[1].replaceAll("[()]", ",").split(",");
+		
+		Class<?>[] parameterTypes = methodItems.length >= 2 ? new Class<?>[methodItems.length - 1] : null;
+		for(int i=1; i<methodItems.length; i++){
+			
+			try {
+				Class<?> clazz = Class.forName(methodItems[i]);
+				parameterTypes[i-1] = clazz;
+			} catch (ClassNotFoundException e) {
+				throw LocalMockErrorCode.ILLEGAL_PARAM.exp("[delegateMethodFullPath=" + _delegateMethodFullPath + "]配置错误，找不到参数的类->" + methodItems[i], e);
+			}
+			
+		}
+		try {
+			mbi.setDelegateMethod(mbi.getDelegateClass().getMethod(methodItems[0], parameterTypes));
+		} catch (NoSuchMethodException|SecurityException e) {
+			throw LocalMockErrorCode.ILLEGAL_PARAM.exp("[delegateMethodFullPath=" + _delegateMethodFullPath + "]配置错误，找不到被代理的方法", e);
+		}
 	}
 	
 	public static void putIfAbsent(MockItem mockItem){

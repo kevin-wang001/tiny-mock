@@ -1,5 +1,7 @@
 package com.cn.kvn.mock.local.domain;
 
+import java.lang.reflect.Method;
+
 import com.cn.kvn.mock.local.exception.LocalMockErrorCode;
 import com.cn.kvn.mock.local.processor.MockByProcessor;
 
@@ -19,47 +21,36 @@ public class MockByItem extends MockItem {
 	 *      Class, java.lang.reflect.Method, Object[])
 	 */
 	private Class<?> delegateClass;
+	
+	private Method delegateMethod;
 
-	/**
-	 * 用于mock的method名字。
-	 */
-	private String delegateMethodName;
-
-	/**
-	 * 是否将真实方法的参数往mock方法中传递，默认false
-	 */
-	private boolean passParameter;
 
 	public Class<?> getDelegateClass() {
 		return delegateClass;
 	}
 
+
 	public void setDelegateClass(Class<?> delegateClass) {
 		this.delegateClass = delegateClass;
 	}
 
-	public String getDelegateMethodName() {
-		return delegateMethodName;
+
+	public Method getDelegateMethod() {
+		return delegateMethod;
 	}
 
-	public void setDelegateMethodName(String delegateMethodName) {
-		this.delegateMethodName = delegateMethodName;
+
+	public void setDelegateMethod(Method delegateMethod) {
+		this.delegateMethod = delegateMethod;
 	}
 
-	public boolean isPassParameter() {
-		return passParameter;
-	}
-
-	public void setPassParameter(boolean passParameter) {
-		this.passParameter = passParameter;
-	}
 
 	public void check() {
 		super.check();
 		if (delegateClass == null) {
 			throw LocalMockErrorCode.ILLEGAL_PARAM.exp("delegateClass不能为空");
 		}
-		if (delegateMethodName == null) {
+		if (delegateMethod == null) {
 			throw LocalMockErrorCode.ILLEGAL_PARAM.exp("delegateMethod不能为空");
 		}
 	}

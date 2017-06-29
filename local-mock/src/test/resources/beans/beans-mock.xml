@@ -42,8 +42,8 @@
 			<list>
 				<bean class="com.cn.kvn.mock.local.config_mock.MockByXmlItem"
 					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_14(java.lang.String,com.cn.kvn.mock.local.test.Foo)"
-					p:delegateClass="com.cn.kvn.mock.local.test.MockServiceA"
-					p:delegateMethodName="mockMethod_14" p:passParameter="true" scope="prototype" />
+					p:delegateMethodFullPath="com.cn.kvn.mock.local.test.MockServiceA#mockMethod_14(java.lang.String,com.cn.kvn.mock.local.test.Foo)"
+					scope="prototype" />
 			</list>
 		</property>
 

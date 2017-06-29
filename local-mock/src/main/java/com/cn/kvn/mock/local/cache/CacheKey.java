@@ -40,7 +40,7 @@ public class CacheKey {
 	 */
 	public String getKey(){
 		StringBuffer sb = new StringBuffer(mockByItem.getDelegateClass().getName());
-		sb.append("#").append(mockByItem.getDelegateMethodName()).append(JSON.toJSONString(this.methodArgs));
+		sb.append("#").append(mockByItem.getDelegateMethod().getName()).append(JSON.toJSONString(this.methodArgs));
 		return sb.toString();
 	}
 	

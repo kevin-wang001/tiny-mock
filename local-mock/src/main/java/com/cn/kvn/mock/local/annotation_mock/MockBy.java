@@ -5,34 +5,24 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-import java.lang.reflect.Method;
 
 /**
- * 含有@MockBy注解的方法，将使用useClass中的useMethod方法的返回值来返回 
+ * 含有@MockBy注解的方法，将使用mockMethodFullPath指定的方法的返回值来返回 
  * @author Created by wzy on 2017/6/1.
  */
 @Target({ METHOD })
 @Retention(RUNTIME)
 public @interface MockBy {
-	/**
-	 * useClass : 用于mock的class
-	 */
-	Class<?> useClass();
 	
 	/**
+	 * mock方法的全路径。通过它来定位到mock的类和方法
 	 * <pre>
-	 * 用于mock的method名字。
-	 * Note:
-	 * 1. 这个method必需在useClass中定义过。通过这个class去spring容器中获取这个bean
-	 * 2. 暂时只支持无参的方法
+	 * 形如：  
+	 * com.cn.kvn.mock.local.test.MockServiceA#mockMethod_4()
+	 * com.cn.kvn.mock.local.test.MockServiceA#mockMethod_11(java.lang.String,com.cn.kvn.mock.local.test.Foo)
 	 * </pre>
-	 */
-	String useMethod();
-
-	/**
-	 * 是否将真实方法的参数往mock方法中传递，默认false
-	 * 
 	 * @return
 	 */
-	boolean passParameter() default false;
+	String delegateMethodFullPath();
+	
 }
