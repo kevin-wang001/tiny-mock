@@ -119,7 +119,7 @@ http采用OkHttp <br/>
 **MockBy eg:**
 >
 	// 注解形式
-	@MockBy(useClass = MockServiceA.class, useMethod = "mockMethod_4")
+	@MockBy(delegateMethodFullPath="com.cn.kvn.mock.local.test.MockServiceA#mockMethod_4()")
 	public String method_4() {
 		System.out.println("执行真实方法：method_4");
 		return "do method_4------[real method methodA_4]";

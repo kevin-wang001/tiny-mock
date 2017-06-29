@@ -107,21 +107,18 @@ public class ServiceA {
 
 
 	/** ===============================@MockBy============================================= */
-//	@MockBy(useClass = MockServiceA.class, useMethod = "mockMethod_4")
 	@MockBy(delegateMethodFullPath="com.cn.kvn.mock.local.test.MockServiceA#mockMethod_4()")
 	public String method_4() {
 		System.out.println("执行真实方法：method_4");
 		return "do method_4------[real method methodA_4]";
 	}
 
-//	@MockBy(useClass = MockServiceA.class, useMethod = "mockMethod_5")
 	@MockBy(delegateMethodFullPath="com.cn.kvn.mock.local.test.MockServiceA#mockMethod_5()")
 	public String method_5(String msg) {
 		System.out.println("执行真实方法：method_5 -->msg:" + msg);
 		return "do method_5------[real method method_5]";
 	}
 	
-//	@MockBy(useClass = MockServiceA.class, useMethod = "mockMethod_11", passParameter = true)
 	@MockBy(delegateMethodFullPath="com.cn.kvn.mock.local.test.MockServiceA#mockMethod_11(java.lang.String,com.cn.kvn.mock.local.test.Foo)")
 	public String method_11(String msg, Foo foo) {
 		System.out.println("执行真实方法：method_11 -->msg:" + msg);
