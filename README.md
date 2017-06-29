@@ -113,7 +113,7 @@ http采用OkHttp <br/>
 	// 配置形式 （具体参考src/test/resources/beans/beans-mock.xml）
 	<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
 		p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_12()"
-		p:returnValue="RANDOM()" scope="prototype" />
+		p:returnValue="RANDOM()" />
 
 
 **MockBy eg:**
@@ -128,8 +128,7 @@ http采用OkHttp <br/>
 	// 配置形式 （具体参考src/test/resources/beans/beans-mock.xml）
 	<bean class="com.cn.kvn.mock.local.config_mock.MockByXmlItem"
 					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_14(java.lang.String,com.cn.kvn.mock.local.test.Foo)"
-					p:delegateMethodFullPath="com.cn.kvn.mock.local.test.MockServiceA#mockMethod_14(java.lang.String,com.cn.kvn.mock.local.test.Foo)"
-					scope="prototype" />
+					p:delegateMethodFullPath="com.cn.kvn.mock.local.test.MockServiceA#mockMethod_14(java.lang.String,com.cn.kvn.mock.local.test.Foo)" />
 	
 
 **MockByHttp eg:**
@@ -143,5 +142,4 @@ http采用OkHttp <br/>
 >
 	// 配置形式 （具体参考src/test/resources/beans/beans-mock.xml）
 	<bean class="com.cn.kvn.mock.local.config_mock.MockByHttpXmlItem"
-					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_17()"
-					scope="prototype" />
+					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_17()" />
