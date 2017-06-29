@@ -16,7 +16,7 @@ public class MockReturnXmlItem extends MockReturnItem implements IMockXmlConfigS
 
 	@PostConstruct
 	public void init() {
-		mxi.initMockItem();
+		mxi.resolveMockItem();
 	}
 
 	@Override

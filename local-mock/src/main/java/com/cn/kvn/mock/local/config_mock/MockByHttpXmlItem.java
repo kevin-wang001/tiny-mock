@@ -14,7 +14,7 @@ public class MockByHttpXmlItem extends MockByHttpItem implements IMockXmlConfigS
 	
 	@PostConstruct
 	public void init(){
-		mxi.initMockItem();
+		mxi.resolveMockItem();
 	}
 
 	@Override
