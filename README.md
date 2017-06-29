@@ -21,7 +21,6 @@ tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。
 >
 	/**
 	 * 含有@MockReturn的方法，将直接返回value
-	 * @author Created by wzy on 2017/6/1.
 	 */
 	@Target({METHOD})
 	@Retention(RUNTIME)
@@ -43,24 +42,19 @@ tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。
 使用在真实接口上，通过第三个类来代理执行真实逻辑，然后返回。
 >
 	/**
-	 * 含有@MockBy注解的方法，将使用useClass中的useMethod方法的返回值来返回 
-	 * @author Created by wzy on 2017/6/1.
+	 * 含有@MockBy注解的方法，将使用mockMethodFullPath指定的方法的返回值来返回 
 	 */
 	@Target({ METHOD })
 	@Retention(RUNTIME)
 	public @interface MockBy {
 		/**
-		 * useClass : 用于mock的class
+		 * mock方法的全路径。通过它来定位到mock的类和方法
+		 * 形如：  
+		 * com.cn.kvn.mock.local.test.MockServiceA#mockMethod_4()
+		 * com.cn.kvn.mock.local.test.MockServiceA#mockMethod_11(java.lang.String)
+		 * @return
 		 */
-		Class<?> useClass();
-		/**
-		 * 用于mock的method名字。
-		 */
-		String useMethod();
-		/**
-		 * 是否将真实方法的参数往mock方法中传递，默认false
-		 */
-		boolean passParameter() default false;
+		String delegateMethodFullPath();
 	}
 
 ### 3. @MockByHttp（MockByHttpXmlItem）
@@ -69,14 +63,12 @@ tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。
 >
 	/**
 	 * 使用http接口来mock，实现mock服务，解耦mock
-	 * @author Created by wzy on 2017/6/20.
 	 */
 	@Target({ METHOD })
 	@Retention(RUNTIME)
 	public @interface MockByHttp {
 		/**
 		 * http url。默认使用mock/class/method?params=xxx
-		 * @return
 		 */
 		String serverPath() default "";
 	}
@@ -120,8 +112,8 @@ http采用OkHttp <br/>
 >	
 	// 配置形式 （具体参考src/test/resources/beans/beans-mock.xml）
 	<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
-	p:mockedClass="com.cn.kvn.mock.local.test.ServiceA"
-	p:mockedMethodName="method_12" p:returnValue="RANDOM()" scope="prototype" />
+		p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_12()"
+		p:returnValue="RANDOM()" scope="prototype" />
 
 
 **MockBy eg:**
@@ -134,12 +126,10 @@ http采用OkHttp <br/>
 	}
 >
 	// 配置形式 （具体参考src/test/resources/beans/beans-mock.xml）
-	<bean
-	class="com.cn.kvn.mock.local.config_mock.MockByXmlItem"
-	p:mockedClass="com.cn.kvn.mock.local.test.ServiceA"
-	p:mockedMethodName="method_14"
-	p:delegateClass="com.cn.kvn.mock.local.test.MockServiceA"
-	p:delegateMethodName="mockMethod_14" p:passParameter="true" scope="prototype" />
+	<bean class="com.cn.kvn.mock.local.config_mock.MockByXmlItem"
+					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_14(java.lang.String,com.cn.kvn.mock.local.test.Foo)"
+					p:delegateMethodFullPath="com.cn.kvn.mock.local.test.MockServiceA#mockMethod_14(java.lang.String,com.cn.kvn.mock.local.test.Foo)"
+					scope="prototype" />
 	
 
 **MockByHttp eg:**
@@ -153,5 +143,5 @@ http采用OkHttp <br/>
 >
 	// 配置形式 （具体参考src/test/resources/beans/beans-mock.xml）
 	<bean class="com.cn.kvn.mock.local.config_mock.MockByHttpXmlItem"
-	p:mockedClass="com.cn.kvn.mock.local.test.ServiceA"
-	p:mockedMethodName="method_17"/>
+					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_17()"
+					scope="prototype" />
