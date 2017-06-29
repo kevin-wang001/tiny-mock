@@ -25,41 +25,35 @@
 	<bean class="com.cn.kvn.mock.local.domain.MockConfig">
 		<property name="mockReturnItemList">
 			<list>
-				<bean
-					class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
-					p:mockedClass="com.cn.kvn.mock.local.test.ServiceA"
-					p:mockedMethodName="method_12" p:returnValue="RANDOM()" scope="prototype" />
-				<bean
-					class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
-					p:mockedClass="com.cn.kvn.mock.local.test.ServiceA"
-					p:mockedMethodName="method_13" p:returnValue="123"
-					p:mockedMethodParameterCount="0" scope="prototype" />
-				<bean
-					class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
-					p:mockedClass="com.cn.kvn.mock.local.test.ServiceA"
-					p:mockedMethodName="method_13" p:returnValue="456"
-					p:mockedMethodParameterCount="1" scope="prototype" />
+				<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
+					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_12()"
+					p:returnValue="RANDOM()" scope="prototype" />
+				<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
+					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_13()"
+					p:returnValue="123" scope="prototype" />
+
+				<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
+					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_13(java.lang.String)"
+					p:returnValue="456" scope="prototype" />
 			</list>
 		</property>
 
 		<property name="mockByItemList">
 			<list>
-				<bean
-					class="com.cn.kvn.mock.local.config_mock.MockByXmlItem"
-					p:mockedClass="com.cn.kvn.mock.local.test.ServiceA"
-					p:mockedMethodName="method_14"
+				<bean class="com.cn.kvn.mock.local.config_mock.MockByXmlItem"
+					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_14(java.lang.String,com.cn.kvn.mock.local.test.Foo)"
 					p:delegateClass="com.cn.kvn.mock.local.test.MockServiceA"
 					p:delegateMethodName="mockMethod_14" p:passParameter="true" scope="prototype" />
 			</list>
 		</property>
-		
+
 		<property name="mockServerAddress" value="http://localhost:8082" />
-		
+
 		<property name="mockByHttpItemList">
 			<list>
 				<bean class="com.cn.kvn.mock.local.config_mock.MockByHttpXmlItem"
-				p:mockedClass="com.cn.kvn.mock.local.test.ServiceA"
-				p:mockedMethodName="method_17"/>
+					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_17()"
+					scope="prototype" />
 			</list>
 		</property>
 

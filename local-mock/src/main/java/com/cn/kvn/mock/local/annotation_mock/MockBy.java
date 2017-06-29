@@ -5,6 +5,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+import java.lang.reflect.Method;
 
 /**
  * 含有@MockBy注解的方法，将使用useClass中的useMethod方法的返回值来返回 
@@ -17,7 +18,7 @@ public @interface MockBy {
 	 * useClass : 用于mock的class
 	 */
 	Class<?> useClass();
-
+	
 	/**
 	 * <pre>
 	 * 用于mock的method名字。

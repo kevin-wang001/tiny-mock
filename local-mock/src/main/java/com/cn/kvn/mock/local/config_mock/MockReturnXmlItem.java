@@ -16,22 +16,13 @@ public class MockReturnXmlItem extends MockReturnItem implements IMockXmlConfigS
 
 	@PostConstruct
 	public void init() {
-		initMockedMethod();
+		mxi.initMockItem();
 	}
 
 	@Override
-	public void initMockedMethod() {
-		mxi.initMockedMethod();
+	public void setMockedMethodFullPath(String mockedMethodFullPath) {
+		mxi.setMockedMethodFullPath(mockedMethodFullPath);
 	}
 
-	@Override
-	public void setMockedMethodName(String mockedMethodName) {
-		mxi.setMockedMethodName(mockedMethodName);
-	}
-
-	@Override
-	public void setMockedMethodParameterCount(Integer mockedMethodParameterCount) {
-		mxi.setMockedMethodParameterCount(mockedMethodParameterCount);
-	}
 
 }

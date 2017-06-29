@@ -19,7 +19,7 @@ public enum LocalMockErrorCode implements IErrors {
 	MISSING_CONSTRAINT(1006, "MockItem[{0}]没有设置@Constraint"),
 	HTTP_POST_ERROR(1007, "发送post请求异常"),
 	/**-----------------COMMON ERROR--------------------*/
-	ILLEGAL_PARAM(1999, "参数异常:%s");
+	ILLEGAL_PARAM(1999, "参数异常:{0}");
 	
 	
 	private int code;

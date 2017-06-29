@@ -1,18 +1,7 @@
 package com.cn.kvn.mock.local.config_mock;
 
-import java.lang.reflect.Method;
-import java.util.Collection;
-
-import javax.annotation.PostConstruct;
-
-import org.springframework.util.CollectionUtils;
-
 import com.cn.kvn.mock.local.domain.MockItem;
 import com.cn.kvn.mock.local.exception.LocalMockErrorCode;
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
 
 /**
 * @author wzy
@@ -21,69 +10,57 @@ import com.google.common.collect.Multimaps;
 public class MockXmlItem {
 	private MockItem mockItem;
 	
-	/** 被mock的class的method，即真实的method */
-	private String mockedMethodName;
-
 	/**
-	 * {@link #mockedMethodName}方法的参数个数<br/>
-	 * 类中的方法被重载的时候，需要用到这个参数去定位到底是类
-	 * {@link com.cn.kvn.mock.local.domain.MockItem#getMockedClass()}
-	 * 的哪一个方法
+	 * 类似 com.cn.kvn.mock.local.test.ServiceA#method_13(String) 的配置
 	 */
-	private Integer mockedMethodParameterCount;
-
+	private String mockedMethodFullPath;
+	
 	public MockXmlItem(MockItem mockItem) {
-		super();
 		this.mockItem = mockItem;
 	}
 
 	/**
-	 * 设置 mockedMethod的值
+	 * 
 	 */
-	public void initMockedMethod() {
-		Method[] methods = this.mockItem.getMockedClass().getMethods();
-		Multimap<String, Method> methodMap = Multimaps.index(Lists.newArrayList(methods), new Function<Method, String>() {
-			@Override
-			public String apply(Method input) {
-				return input.getName();
-			}
-		});
-
-		Collection<Method> coll = methodMap.get(mockedMethodName);
-
-		// 找不到方法
-		if (CollectionUtils.isEmpty(coll)) {
-			throw LocalMockErrorCode.METHOD_NOT_EXIST.exp(this.mockItem.getMockedClass().getName(), mockedMethodName);
+	protected void initMockItem() {
+		String _mockedMethodFullPath = mockedMethodFullPath.replaceAll("\\s", "");
+		String[] items = _mockedMethodFullPath.split("#");
+		if(items.length != 2){
+			throw LocalMockErrorCode.ILLEGAL_PARAM.exp("[mockedMethodFullPath=" + mockedMethodFullPath + "]配置错误，含有多个'#'");
 		}
-
-		// 方法存在重载
-		if (coll.size() >= 2) {
-			if (mockedMethodParameterCount == null) {
-				throw LocalMockErrorCode.ILLEGAL_PARAM.exp(this.mockItem.getMockedClass().getName().concat("方法[").concat(mockedMethodName).concat("]存在重载，需要在xml中设置parameterCount参数才能定位"));
-			}
-			for (Method m : coll) {
-				if (m.getParameterTypes().length == mockedMethodParameterCount) {
-					this.mockItem.setMockedMethod(m);
-					return;
-				}
-			}
-
-			throw LocalMockErrorCode.METHOD_NOT_MATCH.exp(this.mockItem.getMockedClass().getName(), mockedMethodParameterCount, mockedMethodName);
+		// 校验方法串
+		if(items[1].matches("[0-9a-zA-Z_]+\\(([0-9a-zA-Z_.]*,)?[0-9a-zA-Z_.]*?\\)") == false){
+			throw LocalMockErrorCode.ILLEGAL_PARAM.exp("[mockedMethodFullPath=" + mockedMethodFullPath + "]配置错误，方法格式错误->" + items[1]);
 		}
-
-		this.mockItem.setMockedMethod(coll.iterator().next()); // 只匹配到一个，直接赋值
+		
+		try {
+			mockItem.setMockedClass(Class.forName(items[0]));
+		} catch (ClassNotFoundException e) {
+			throw LocalMockErrorCode.ILLEGAL_PARAM.exp("[mockedMethodFullPath=" + mockedMethodFullPath + "]配置错误，找不到被代理的类", e);
+		}
+		
+		String[] methodItems = items[1].replaceAll("[()]", ",").split(",");
+		
+		Class<?>[] parameterTypes = methodItems.length >= 2 ? new Class<?>[methodItems.length - 1] : null;
+		for(int i=1; i<methodItems.length; i++){
+			
+			try {
+				Class<?> clazz = Class.forName(methodItems[i]);
+				parameterTypes[i-1] = clazz;
+			} catch (ClassNotFoundException e) {
+				throw LocalMockErrorCode.ILLEGAL_PARAM.exp("[mockedMethodFullPath=" + mockedMethodFullPath + "]配置错误，找不到参数的类->" + methodItems[i], e);
+			}
+			
+		}
+		try {
+			mockItem.setMockedMethod(mockItem.getMockedClass().getMethod(methodItems[0], parameterTypes));
+		} catch (NoSuchMethodException|SecurityException e) {
+			throw LocalMockErrorCode.ILLEGAL_PARAM.exp("[mockedMethodFullPath=" + mockedMethodFullPath + "]配置错误，找不到被代理的方法", e);
+		}
 	}
 
-	public void setMockedMethodParameterCount(Integer mockedMethodParameterCount) {
-		this.mockedMethodParameterCount = mockedMethodParameterCount;
-	}
-
-	public String getMockedMethodName() {
-		return mockedMethodName;
-	}
-
-	public void setMockedMethodName(String mockedMethodName) {
-		this.mockedMethodName = mockedMethodName;
+	public void setMockedMethodFullPath(String mockedMethodFullPath) {
+		this.mockedMethodFullPath = mockedMethodFullPath;
 	}
 
 	public MockItem getMockItem() {

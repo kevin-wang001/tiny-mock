@@ -9,7 +9,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.ApplicationContext;
 
 import com.alibaba.fastjson.JSON;
 import com.cn.kvn.mock.local.annotation_mock.MockBy;
@@ -34,8 +33,6 @@ public class MockAspect implements InitializingBean {
 	 */
 	private int randomExpRate = 3;
 
-	@Resource
-	private ApplicationContext applicationContext;
 	@Resource
 	private MockProcessorFactory mockProcessorFactory;
 

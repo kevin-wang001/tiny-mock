@@ -51,7 +51,7 @@ public abstract class MockItem {
 		
 		return cons.processBy();
 	}
-
+	
 	public Class<?> getMockedClass() {
 		return mockedClass;
 	}

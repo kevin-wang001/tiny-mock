@@ -56,13 +56,13 @@ public class MockReturnTest extends SpringBaseTest {
 	/***********************************xml mock************************************/
 	@Test
 	public void testConfigMockReturnInt() {
-		System.out.println("serviceA.method_3() ----> " + serviceA.method_12());
+		System.out.println("serviceA.method_12() ----> " + serviceA.method_12());
 	}
 	
 	@Test
 	public void testOverloadMethodMock() {
-		System.out.println("serviceA.method_3() ----> " + serviceA.method_13());
-		System.out.println("serviceA.method_3() ----> " + serviceA.method_13("xxx"));
+		System.out.println("serviceA.method_13() ----> " + serviceA.method_13());
+		System.out.println("serviceA.method_13() ----> " + serviceA.method_13("xxx"));
 	}
 	
 	
