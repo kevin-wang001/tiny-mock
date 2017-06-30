@@ -1,4 +1,5 @@
-package com.cn.kvn.mock.local;
+package com.kvn;
+
 
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

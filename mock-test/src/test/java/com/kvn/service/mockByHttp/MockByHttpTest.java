@@ -1,4 +1,4 @@
-package com.cn.kvn.mock.local.test.mockByHttp;
+package com.kvn.service.mockByHttp;
 
 import java.util.List;
 
@@ -7,10 +7,10 @@ import javax.annotation.Resource;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSON;
-import com.cn.kvn.mock.local.SpringBaseTest;
-import com.cn.kvn.mock.local.test.Foo;
-import com.cn.kvn.mock.local.test.ServiceA;
 import com.google.common.collect.Lists;
+import com.kvn.SpringBaseTest;
+import com.kvn.domain.Foo;
+import com.kvn.service.ServiceA;
 
 /**
 * @author wzy

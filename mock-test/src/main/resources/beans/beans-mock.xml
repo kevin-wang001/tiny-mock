@@ -14,7 +14,7 @@
 
 	<aop:config>
 		<aop:pointcut id="mockPointCut"
-			expression="execution(* com.cn.kvn.mock.local.test..*.*(..))" />
+			expression="execution(* com.kvn.service..*.*(..))" />
 		<aop:aspect ref="mockAspect">
 			<aop:around method="aroundAdvice" pointcut-ref="mockPointCut" />
 		</aop:aspect>
@@ -27,14 +27,14 @@
 		<property name="mockReturnItemList">
 			<list>
 				<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
-					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_12()"
+					p:mockedMethodFullPath="com.kvn.service.ServiceA#method_12()"
 					p:returnValue="RANDOM()" />
 				<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
-					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_13()"
+					p:mockedMethodFullPath="com.kvn.service.ServiceA#method_13()"
 					p:returnValue="123" />
 
 				<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
-					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_13(java.lang.String)"
+					p:mockedMethodFullPath="com.kvn.service.ServiceA#method_13(java.lang.String)"
 					p:returnValue="456" />
 			</list>
 		</property>
@@ -42,8 +42,8 @@
 		<property name="mockByItemList">
 			<list>
 				<bean class="com.cn.kvn.mock.local.config_mock.MockByXmlItem"
-					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_14(java.lang.String,com.cn.kvn.mock.local.test.Foo)"
-					p:delegateMethodFullPath="com.cn.kvn.mock.local.test.MockServiceA#mockMethod_14(java.lang.String,com.cn.kvn.mock.local.test.Foo)" />
+					p:mockedMethodFullPath="com.kvn.service.ServiceA#method_14(java.lang.String,com.kvn.domain.Foo)"
+					p:delegateMethodFullPath="mock.com.kvn.service.MockServiceA#mockMethod_14(java.lang.String,com.kvn.domain.Foo)" />
 			</list>
 		</property>
 
@@ -52,7 +52,7 @@
 		<property name="mockByHttpItemList">
 			<list>
 				<bean class="com.cn.kvn.mock.local.config_mock.MockByHttpXmlItem"
-					p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_17()" />
+					p:mockedMethodFullPath="com.kvn.service.ServiceA#method_17()" />
 			</list>
 		</property>
 

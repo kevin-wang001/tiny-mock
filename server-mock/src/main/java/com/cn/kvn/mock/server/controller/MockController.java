@@ -18,38 +18,38 @@ import com.cn.kvn.mock.server.framework.param_resolve.FastJson;
 @RequestMapping("mock")
 public class MockController {
 	
-	@RequestMapping("com-cn-kvn-mock-local-test-ServiceA/method_15")
+	@RequestMapping("com-kvn-service-ServiceA/method_15")
 	public String mockMethod(){
 		System.out.println("------执行服务端mock方法---------");
 		return "mock return from mock server";
 	}
 	
-	@RequestMapping("com-cn-kvn-mock-local-test-ServiceA/method_16")
+	@RequestMapping("com-kvn-service-ServiceA/method_16")
 	public String mockMethod_16(){
 		System.out.println("------执行服务端mock方法:mockMethod_16---------");
 		return "mock return from mock server: finish executing mockMethod_16";
 	}
 	
 	
-	@RequestMapping("com-cn-kvn-mock-local-test-ServiceA/method_18")
+	@RequestMapping("com-kvn-service-ServiceA/method_18")
 	public void mockMethod_18(@RequestParam String msg){
 		System.out.println("------执行服务端mock方法:method_18---------msg:" + msg);
 	}
 	
-	@RequestMapping("com-cn-kvn-mock-local-test-ServiceA/method_19")
+	@RequestMapping("com-kvn-service-ServiceA/method_19")
 	public String mockMethod_19(@FastJson Foo foo){
 		System.out.println("------执行服务端mock方法:method_18---------foo:" + JSON.toJSONString(foo));
 		return "hello client!";
 	}
 	
-	@RequestMapping("com-cn-kvn-mock-local-test-ServiceA/method_20")
+	@RequestMapping("com-kvn-service-ServiceA/method_20")
 	public String mockMethod_20(String msg, @FastJson Foo foo){
 		System.out.println("------执行服务端mock方法:method_20---------msg:" + msg + "---foo:" + JSON.toJSONString(foo));
 		return "hello client!";
 	}
 	
 	
-	@RequestMapping("com-cn-kvn-mock-local-test-ServiceA/method_21")
+	@RequestMapping("com-kvn-service-ServiceA/method_21")
 	public List<Foo> mockMethod_21(String msg, @FastJson List<Foo> ls){
 		System.out.println("------执行服务端mock方法:method_21---------msg:" + msg + "---ls:" + JSON.toJSONString(ls));
 		Foo foo = new Foo();

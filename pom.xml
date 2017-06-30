@@ -9,11 +9,24 @@
 		<module>mock-common</module>
 		<module>local-mock</module>
 		<module>server-mock</module>
+		<module>mock-test</module>
 	</modules>
 
 	<properties>
 		<spring.version>4.1.6.RELEASE</spring.version>
 		<slf4j.version>1.7.12</slf4j.version>
+		<commons.lang3.version>3.1</commons.lang3.version>
+		<fastjson.version>1.1.35</fastjson.version>
+		<aspectj.version>1.7.4</aspectj.version>
+		<logback.version>1.1.2</logback.version>
+		<guava.version>15.0</guava.version>
+		<okhttp.version>3.8.0</okhttp.version>
+		<servlet.api.version>3.0.1</servlet.api.version>
+		<jstl.version>1.2</jstl.version>
+		<jsp.api.version>2.0</jsp.api.version>
+		<asm.version>4.0</asm.version>
+		<junit.version>4.10</junit.version>
+		<mock.version>0.0.1-SNAPSHOT</mock.version>
 	</properties>
 
 
@@ -22,19 +35,24 @@
 			<dependency>
 				<groupId>com.cn.kvn.tiny-mock</groupId>
 				<artifactId>mock-common</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>${mock.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.cn.kvn.tiny-mock</groupId>
+				<artifactId>local-mock</artifactId>
+				<version>${mock.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
-				<version>3.1</version>
+				<version>${commons.lang3.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>fastjson</artifactId>
-				<version>1.1.35</version>
+				<version>${fastjson.version}</version>
 			</dependency>
 
 			<!-- spring start -->
@@ -76,7 +94,7 @@
 			<dependency>
 				<groupId>org.aspectj</groupId>
 				<artifactId>aspectjtools</artifactId>
-				<version>1.7.4</version>
+				<version>${aspectj.version}</version>
 			</dependency>
 
 			<!-- logging -->
@@ -98,13 +116,13 @@
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-core</artifactId>
-				<version>1.1.2</version>
+				<version>${logback.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
-				<version>1.1.2</version>
+				<version>${logback.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<!-- logging end -->
@@ -112,32 +130,32 @@
 			<dependency>
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
-				<version>15.0</version>
+				<version>${guava.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.squareup.okhttp3</groupId>
 				<artifactId>okhttp</artifactId>
-				<version>3.8.0</version>
+				<version>${okhttp.version}</version>
 			</dependency>
 
 			<!-- servlet & jsp -->
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>javax.servlet-api</artifactId>
-				<version>3.0.1</version>
+				<version>${servlet.api.version}</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>jstl</artifactId>
-				<version>1.2</version>
+				<version>${jstl.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>jsp-api</artifactId>
 				<scope>provided</scope>
-				<version>2.0</version>
+				<version>${jsp.api.version}</version>
 				<exclusions>
 					<exclusion>
 						<groupId>javax.servlet</groupId>
@@ -150,14 +168,14 @@
 			<dependency>
 				<groupId>org.ow2.asm</groupId>
 				<artifactId>asm</artifactId>
-				<version>4.0</version>
+				<version>${asm.version}</version>
 			</dependency>
 
 			<!-- test -->
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.10</version>
+				<version>${junit.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>

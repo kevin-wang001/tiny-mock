@@ -1,4 +1,4 @@
-package com.cn.kvn.mock.local.test;
+package com.kvn.service;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSON;
 import com.cn.kvn.mock.local.annotation_mock.MockBy;
 import com.cn.kvn.mock.local.annotation_mock.MockByHttp;
 import com.cn.kvn.mock.local.annotation_mock.MockReturn;
+import com.kvn.domain.Foo;
 
 /**
  * @author wzy  2016年7月20日上午10:19:55
@@ -107,19 +108,19 @@ public class ServiceA {
 
 
 	/** ===============================@MockBy============================================= */
-	@MockBy(delegateMethodFullPath="com.cn.kvn.mock.local.test.MockServiceA#mockMethod_4()")
+	@MockBy(delegateMethodFullPath="mock.com.kvn.service.MockServiceA#mockMethod_4()")
 	public String method_4() {
 		System.out.println("执行真实方法：method_4");
 		return "do method_4------[real method methodA_4]";
 	}
 
-	@MockBy(delegateMethodFullPath="com.cn.kvn.mock.local.test.MockServiceA#mockMethod_5()")
+	@MockBy(delegateMethodFullPath="mock.com.kvn.service.MockServiceA#mockMethod_5()")
 	public String method_5(String msg) {
 		System.out.println("执行真实方法：method_5 -->msg:" + msg);
 		return "do method_5------[real method method_5]";
 	}
 	
-	@MockBy(delegateMethodFullPath="com.cn.kvn.mock.local.test.MockServiceA#mockMethod_11(java.lang.String,com.cn.kvn.mock.local.test.Foo)")
+	@MockBy(delegateMethodFullPath="mock.com.kvn.service.MockServiceA#mockMethod_11(java.lang.String,com.kvn.domain.Foo)")
 	public String method_11(String msg, Foo foo) {
 		System.out.println("执行真实方法：method_11 -->msg:" + msg);
 		return "do method_11------[real method method_11]";
