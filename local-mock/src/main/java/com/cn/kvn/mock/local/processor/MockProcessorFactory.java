@@ -1,18 +1,15 @@
 package com.cn.kvn.mock.local.processor;
 
-import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.ApplicationContext;
-
 import com.cn.kvn.mock.local.domain.MockConfig;
 import com.cn.kvn.mock.local.domain.MockItem;
 import com.cn.kvn.mock.local.exception.LocalMockErrorCode;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContext;
+
+import javax.annotation.Resource;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author wzy
@@ -70,7 +67,7 @@ public final class MockProcessorFactory implements InitializingBean {
 		// 通过MockItem获取MockProcessor的class，从而获取MockProcessor
 		Class processorClass = mi.getProcessorClass();
 		
-		return applicationContext.getBean(processorClass);
+		return (MockProcessor) applicationContext.getBean(processorClass);
 	}
 
 }
