@@ -14,11 +14,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import com.alibaba.fastjson.JSON;
 import com.cn.kvn.mock.local.annotation_mock.MockBy;
 import com.cn.kvn.mock.local.annotation_mock.MockByHttp;
 import com.cn.kvn.mock.local.annotation_mock.MockReturn;
 import com.cn.kvn.mock.local.config_mock.MockXmlItem;
+import com.cn.kvn.mock.local.exception.LocalMockErrorCode;
 import com.google.common.base.Function;
 import com.google.common.collect.Maps;
 
@@ -108,7 +108,7 @@ public class MockConfig implements InitializingBean {
 	 * @return
 	 */
 	public static MockItem getMockItem(Method method){
-		String key = method.getDeclaringClass().getName().concat("#").concat(method.getName()).concat(JSON.toJSONString(method.getParameterTypes()));
+		String key = MockItem.getMockKey(method);
 		if(MOCKRETURN_CONFIG_MAP.containsKey(key)){
 			return MOCKRETURN_CONFIG_MAP.get(key);
 		}
@@ -186,6 +186,30 @@ public class MockConfig implements InitializingBean {
 	 * @param mb
 	 */
 	private static void fillDelegateInfo(MockByItem mbi, MockBy mb) {
+		// 默认值
+		if(MockBy.MOCKBY_DEFALUT_PATH.equals(mb.delegateMethodFullPath())){
+			Class<?> defaultDelegateClass = null;
+			Method defaultDelegateMethod = null;
+			String targetClassName = mbi.getMockedClass().getName();
+			int lastPointIndex = targetClassName.lastIndexOf(".");
+			// 默认指定[mock类全路径 = "mock." + 真实类的包名 + ".Mock" + 真实类的类名]
+			String defaultClassName = "mock." + targetClassName.substring(0, lastPointIndex + 1) + "Mock" + targetClassName.substring(lastPointIndex + 1);
+			try {
+				defaultDelegateClass = Class.forName(defaultClassName);
+			} catch (ClassNotFoundException e) {
+				throw LocalMockErrorCode.CLASS_NOT_FOUND.exp(e, defaultClassName);
+			}
+			try {
+				defaultDelegateMethod = defaultDelegateClass.getMethod(mbi.getMockedMethod().getName(), mbi.getMockedMethod().getParameterTypes());
+			} catch (NoSuchMethodException|SecurityException e) {
+				throw LocalMockErrorCode.METHOD_NOT_EXIST.exp(e, defaultClassName, mbi.getMockedMethod().getName());
+			}
+			mbi.setDelegateClass(defaultDelegateClass);
+			mbi.setDelegateMethod(defaultDelegateMethod);
+			return;
+		}
+		
+		// 指定值
 		MockXmlItem.ClassAndMethodResolver classAndMethod = new MockXmlItem.ClassAndMethodResolver() {
 		};
 		classAndMethod.resolveClassAndMethod(mb.delegateMethodFullPath());

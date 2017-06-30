@@ -18,11 +18,13 @@ public @interface MockBy {
 	 * mock方法的全路径。通过它来定位到mock的类和方法
 	 * <pre>
 	 * 形如：  
-	 * com.cn.kvn.mock.local.test.MockServiceA#mockMethod_4()
-	 * com.cn.kvn.mock.local.test.MockServiceA#mockMethod_11(java.lang.String,com.cn.kvn.mock.local.test.Foo)
+	 * mock.com.kvn.service.MockServiceA#mockMethod_4()
+	 * mock.com.kvn.service.MockServiceA#mockMethod_11(java.lang.String,com.kvn.domain.Foo)
 	 * </pre>
 	 * @return
 	 */
-	String delegateMethodFullPath();
+	String delegateMethodFullPath() default MOCKBY_DEFALUT_PATH;
+	
+	String MOCKBY_DEFALUT_PATH = "DEFAULT_PATH";
 	
 }

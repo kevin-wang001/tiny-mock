@@ -125,11 +125,20 @@ public class ServiceA {
 		System.out.println("执行真实方法：method_11 -->msg:" + msg);
 		return "do method_11------[real method method_11]";
 	}
+	@MockBy
+	public String method_23(String msg, Foo foo) {
+		System.out.println("执行真实方法：method_23 -->msg:" + msg);
+		return "do method_23------[real method method_23]";
+	}
 	
 	
 	/** ===============================xml配置类型的MockByItem============================================= */
 	public void method_14(String msg, Foo foo){
 		System.out.println("执行真实方法：method_14 -->msg:" + msg);
+	}
+	
+	public void method_22(String msg, Foo foo){
+		System.out.println("执行真实方法：method_22 -->msg:" + msg);
 	}
 	
 	

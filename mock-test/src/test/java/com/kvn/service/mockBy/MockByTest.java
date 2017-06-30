@@ -48,4 +48,22 @@ public class MockByTest extends SpringBaseTest {
 		serviceA.method_14("xxx", foo);
 	}
 	
+	@Test
+	public void testDefaultConfigByXml(){
+		Foo foo = new Foo();
+		foo.setId(1);
+		foo.setName("MockName");
+		foo.setNo("this is mock no");
+		serviceA.method_22("xxx", foo);
+	}
+	
+	@Test
+	public void testDefaultConfigByAnno(){
+		Foo foo = new Foo();
+		foo.setId(1);
+		foo.setName("MockName");
+		foo.setNo("this is mock no");
+		serviceA.method_23("xxx", foo);
+	}
+	
 }

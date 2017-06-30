@@ -23,7 +23,16 @@ public abstract class MockItem {
 	 * @return
 	 */
 	public String getMockKey() {
-		return mockedClass.getName().concat("#").concat(mockedMethod.getName()).concat(JSON.toJSONString(mockedMethod.getParameterTypes()));
+		return getMockKey(mockedMethod);
+	}
+	
+	/**
+	 * 获取mock的key
+	 * @param method
+	 * @return
+	 */
+	public static String getMockKey(Method method){
+		return method.getDeclaringClass().getName().concat("#").concat(method.getName()).concat(JSON.toJSONString(method.getParameterTypes()));
 	}
 
 	/**
