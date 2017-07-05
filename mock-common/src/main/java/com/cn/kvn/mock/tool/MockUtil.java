@@ -3,6 +3,7 @@ package com.cn.kvn.mock.tool;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,8 +16,7 @@ import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.lang3.RandomStringUtils;
-
-import com.alibaba.fastjson.JSON;
+import org.apache.commons.lang3.RandomUtils;
 
 /**
  * @author wzy on 2017/6/2.
@@ -136,7 +136,8 @@ public class MockUtil {
      * @return
      * @throws Exception
      */
-    public static <T> T randomInstanceOfNonCollection(Class<T> clazz) throws Exception {
+    @SuppressWarnings("unchecked")
+	public static <T> T randomInstanceOfNonCollection(Class<T> clazz) throws Exception {
         /** Collection及子类（List、Set） */
         if (Collection.class.isAssignableFrom(clazz)) {
             throw new RuntimeException("");
@@ -157,6 +158,9 @@ public class MockUtil {
         if (clazz == Timestamp.class) {
             return (T) new Timestamp(System.currentTimeMillis());
         }
+        if(clazz == BigDecimal.class){
+        	return (T) new BigDecimal(RandomUtils.nextDouble(0, 100));
+        }
         // 数组
         if (clazz.isArray()) {
             Object array = Array.newInstance(clazz.getComponentType(), 1);
@@ -172,14 +176,14 @@ public class MockUtil {
 
         // 其他:一般的复杂对象
         try {
-            for (Class<?> type = clazz; type != Object.class; type = clazz.getSuperclass()) {
+            for (Class<?> type = clazz; type != Object.class; type = type.getSuperclass()) {
                 Method[] methods = type.getDeclaredMethods();
                 for (Method method : methods) {
                     /**
                      * 通过setter方法来设置对象属性的值
                      * 注意：POJO中getter、setter必需成对出现，使用IDE自动生成即可。否则将出现不可预知的错误。
                      * */
-                    if (!method.getName().startsWith("set") && method.getParameterTypes().length != 1) {
+                    if (!method.getName().startsWith("set") || method.getParameterTypes().length != 1) {
                         continue;
                     }
                     Class<?>[] parameterTypes = method.getParameterTypes();
@@ -195,7 +199,7 @@ public class MockUtil {
             }
             return instance;
         } catch (Exception e) {
-            System.out.println("can not instantiate, type: " + clazz + ", e: " + e.getMessage());
+            System.err.println("can not instantiate, type: " + clazz + ", e: " + e.getMessage());
             return null;
         }
 
