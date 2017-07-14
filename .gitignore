@@ -16,3 +16,5 @@ classes/
 
 # temp ignore
 logs/
+
+pom-deploy.xml
