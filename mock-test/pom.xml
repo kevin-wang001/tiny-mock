@@ -17,7 +17,7 @@
 			<groupId>com.cn.kvn.tiny-mock</groupId>
 			<artifactId>local-mock</artifactId>
 		</dependency>
-		
+
 
 		<!-- spring -->
 		<dependency>
@@ -45,6 +45,13 @@
 			<artifactId>logback-classic</artifactId>
 		</dependency>
 		<!-- logging end -->
+
+		<!-- tools start -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+		<!-- tools end -->
 
 		<!-- test -->
 		<dependency>

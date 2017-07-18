@@ -13,7 +13,7 @@
 		p:openMock="true" p:needCache="true" p:randomExpRate="4" />
 
 	<aop:config>
-		<aop:pointcut id="mockPointCut" expression="execution(* com.kvn.service..*.*(..))" />
+		<aop:pointcut id="mockPointCut" expression="execution(* com.kvn.service..*.*(..)) && @annotation(com.kvn.dal.core.retry.beforehand.BeforehandRetry)" />
 		<aop:aspect ref="mockAspect">
 			<aop:around method="aroundAdvice" pointcut-ref="mockPointCut" />
 		</aop:aspect>
