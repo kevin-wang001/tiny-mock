@@ -13,7 +13,6 @@ import org.springframework.beans.factory.InitializingBean;
 import com.alibaba.fastjson.JSON;
 import com.cn.kvn.mock.local.annotation_mock.MockBy;
 import com.cn.kvn.mock.local.annotation_mock.MockReturn;
-import com.cn.kvn.mock.local.domain.MockConfig;
 import com.cn.kvn.mock.local.processor.MockProcessor;
 import com.cn.kvn.mock.local.processor.MockProcessorFactory;
 

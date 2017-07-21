@@ -20,6 +20,10 @@ public @interface MockBy {
 	 * 形如：  
 	 * mock.com.kvn.service.MockServiceA#mockMethod_4()
 	 * mock.com.kvn.service.MockServiceA#mockMethod_11(java.lang.String,com.kvn.domain.Foo)
+	 * 
+	 * <b>默认值：</b>
+	 * 默认使用的mock类路径为[mock类全路径 = "mock." + 真实类的包名 + ".Mock" + 真实类的类名]，
+	 * 默认使用的mock方法名与参数与原方法保持一致
 	 * </pre>
 	 * @return
 	 */

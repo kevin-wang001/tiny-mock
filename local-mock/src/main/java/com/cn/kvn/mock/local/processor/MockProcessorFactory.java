@@ -1,6 +1,6 @@
 package com.cn.kvn.mock.local.processor;
 
-import com.cn.kvn.mock.local.domain.MockConfig;
+import com.cn.kvn.mock.local.MockConfig;
 import com.cn.kvn.mock.local.domain.MockItem;
 import com.cn.kvn.mock.local.exception.LocalMockErrorCode;
 import org.springframework.beans.factory.InitializingBean;

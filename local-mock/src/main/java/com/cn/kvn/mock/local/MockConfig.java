@@ -1,4 +1,4 @@
-package com.cn.kvn.mock.local.domain;
+package com.cn.kvn.mock.local;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -18,6 +18,10 @@ import com.cn.kvn.mock.local.annotation_mock.MockBy;
 import com.cn.kvn.mock.local.annotation_mock.MockByHttp;
 import com.cn.kvn.mock.local.annotation_mock.MockReturn;
 import com.cn.kvn.mock.local.config_mock.MockXmlItem;
+import com.cn.kvn.mock.local.domain.MockByHttpItem;
+import com.cn.kvn.mock.local.domain.MockByItem;
+import com.cn.kvn.mock.local.domain.MockItem;
+import com.cn.kvn.mock.local.domain.MockReturnItem;
 import com.cn.kvn.mock.local.exception.LocalMockErrorCode;
 import com.google.common.base.Function;
 import com.google.common.collect.Maps;

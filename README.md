@@ -16,7 +16,8 @@ tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。
 提供了三种注解：@MockReturn、@MockBy、@MockByHttp。  
 其中也对应了三种xml配置MockReturnXmlItem、MockByXmlItem、MockByHttpXmlItem
 
-### 1. @MockReturn（MockReturnXmlItem）
+### 1. @MockReturn（MockReturnXmlItem）  
+**注解形式：@MockReturn**  
 使用在真实接口上，调用真实接口时，直接使用用户指定的值返回。  
 >
 	/**
@@ -38,28 +39,51 @@ tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。
     String RANDOM = "RANDOM()"; // 返回一个随机对象
     String RANDOM_EXCEPTION = "RANDOM_EXCEPTION()"; // 返回随机对象或抛出一个异常
 
-### 2. @MockBy（MockByXmlItem）
+**xml配置形式**  
+具体参考：[mock-test/src/main/resources/beans/beans-mock.xml](mock-test/src/main/resources/beans/beans-mock.xml)  
+例：  
+<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"  
+		p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_12()"  
+		p:returnValue="123" />  
+
+### 2. @MockBy（MockByXmlItem）  
 使用在真实接口上，通过第三个类来代理执行真实逻辑，然后返回。
+**注解形式：@MockBy**  
 >
 	/**
 	 * 含有@MockBy注解的方法，将使用mockMethodFullPath指定的方法的返回值来返回 
+	 * @author Created by wzy on 2017/6/1.
 	 */
 	@Target({ METHOD })
 	@Retention(RUNTIME)
 	public @interface MockBy {
 		/**
 		 * mock方法的全路径。通过它来定位到mock的类和方法
+		 * <pre>
 		 * 形如：  
-		 * com.cn.kvn.mock.local.test.MockServiceA#mockMethod_4()
-		 * com.cn.kvn.mock.local.test.MockServiceA#mockMethod_11(java.lang.String)
+		 * mock.com.kvn.service.MockServiceA#mockMethod_4()
+		 * mock.com.kvn.service.MockServiceA#mockMethod_11(java.lang.String,com.kvn.domain.Foo)
+		 * <b>默认值：</b>
+		 * 默认使用的mock类路径为[mock类全路径 = "mock." + 真实类的包名 + ".Mock" + 真实类的类名]，
+		 * 默认使用的mock方法名与参数与原方法保持一致
+		 * </pre>
 		 * @return
 		 */
-		String delegateMethodFullPath();
+		String delegateMethodFullPath() default MOCKBY_DEFALUT_PATH;
+		String MOCKBY_DEFALUT_PATH = "DEFAULT_PATH";
 	}
+
+**xml配置形式**  
+具体参考：[mock-test/src/main/resources/beans/beans-mock.xml](mock-test/src/main/resources/beans/beans-mock.xml)  
+例：  
+<!-- 使用默认的delegateMethodFullPath。 -->  
+<bean class="com.cn.kvn.mock.local.config_mock.MockByXmlItem"  
+	p:mockedMethodFullPath="com.kvn.service.ServiceA#method_22(java.lang.String,com.kvn.domain.Foo)" />  
 
 ### 3. @MockByHttp（MockByHttpXmlItem）
 使用第三方Mock服务来代理执行真实逻辑，然后返回mock的结果。
 为了设计的轻量和对异构系统的支持友好，这里使用了http的方式来调用第三方mock服务。（可以配合mock-server一起使用，也可以自开发mock-server）
+**注解形式：@MockByHttp**  
 >
 	/**
 	 * 使用http接口来mock，实现mock服务，解耦mock
@@ -72,6 +96,13 @@ tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。
 		 */
 		String serverPath() default "";
 	}
+
+**xml配置形式**  
+具体参考：[mock-test/src/main/resources/beans/beans-mock.xml](mock-test/src/main/resources/beans/beans-mock.xml)  
+例：  
+<bean class="com.cn.kvn.mock.local.config_mock.MockByHttpXmlItem"  
+					p:mockedMethodFullPath="com.kvn.service.ServiceA#method_17()" />  
+
 
 ## II. server-mock
 接收local-client发送过来的mock请求，并分发到相应的mock请求处理类，进行处理，然后返回mock的执行结果。

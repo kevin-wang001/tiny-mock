@@ -22,7 +22,7 @@
 
 	<!-- 如果只使用mock注解，下面可以不配置。如果要使用配置类型的mock，使用下面注解 -->
 	<!-- spring 内部bean是prototype的，所以不用担心MockItem的bean被后面的覆盖，因此可以不配置 scope="prototype" -->
-	<bean class="com.cn.kvn.mock.local.domain.MockConfig">
+	<bean class="com.cn.kvn.mock.local.MockConfig">
 		<property name="mockReturnItemList">
 			<list>
 				<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
