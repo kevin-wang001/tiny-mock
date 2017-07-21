@@ -1,4 +1,4 @@
-package com.cn.kvn.mock.local.test;
+package com.kvn.domain;
 
 /**
  * 包路径与client端要保持一致

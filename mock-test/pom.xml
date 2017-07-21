@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.cn.kvn.tiny-mock</groupId>
 		<artifactId>tiny-mock</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>mock-test</artifactId>
 

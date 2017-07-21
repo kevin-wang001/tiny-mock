@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.cn.kvn.tiny-mock</groupId>
 	<artifactId>tiny-mock</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>mock-common</module>
@@ -26,7 +26,7 @@
 		<jsp.api.version>2.0</jsp.api.version>
 		<asm.version>4.0</asm.version>
 		<junit.version>4.10</junit.version>
-		<mock.version>0.0.1-SNAPSHOT</mock.version>
+		<mock.version>1.0.0</mock.version>
 	</properties>
 
 
@@ -205,5 +205,18 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<distributionManagement>
+        <repository>
+            <id>central</id>
+            <name>Artifactory Release Repository</name>
+            <url>http://172.16.21.221:8081/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Artifactory Snapshot Repository</name>
+            <url>http://172.16.21.221:8081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>

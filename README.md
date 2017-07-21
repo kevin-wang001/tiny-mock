@@ -42,7 +42,8 @@ tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。
 **xml配置形式**  
 具体参考：[mock-test/src/main/resources/beans/beans-mock.xml](mock-test/src/main/resources/beans/beans-mock.xml)  
 例：  
-<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"  
+>
+	<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"  
 		p:mockedMethodFullPath="com.cn.kvn.mock.local.test.ServiceA#method_12()"  
 		p:returnValue="123" />  
 
@@ -76,9 +77,10 @@ tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。
 **xml配置形式**  
 具体参考：[mock-test/src/main/resources/beans/beans-mock.xml](mock-test/src/main/resources/beans/beans-mock.xml)  
 例：  
-<!-- 使用默认的delegateMethodFullPath。 -->  
-<bean class="com.cn.kvn.mock.local.config_mock.MockByXmlItem"  
-	p:mockedMethodFullPath="com.kvn.service.ServiceA#method_22(java.lang.String,com.kvn.domain.Foo)" />  
+>
+	<!-- 使用默认的delegateMethodFullPath。 -->  
+	<bean class="com.cn.kvn.mock.local.config_mock.MockByXmlItem"  
+		p:mockedMethodFullPath="com.kvn.service.ServiceA#method_22(java.lang.String,com.kvn.domain.Foo)" />  
 
 ### 3. @MockByHttp（MockByHttpXmlItem）
 使用第三方Mock服务来代理执行真实逻辑，然后返回mock的结果。
@@ -100,8 +102,9 @@ tiny-mock 分本地mock（local-mock）和服务mock（server-mock）。
 **xml配置形式**  
 具体参考：[mock-test/src/main/resources/beans/beans-mock.xml](mock-test/src/main/resources/beans/beans-mock.xml)  
 例：  
-<bean class="com.cn.kvn.mock.local.config_mock.MockByHttpXmlItem"  
-					p:mockedMethodFullPath="com.kvn.service.ServiceA#method_17()" />  
+>
+	<bean class="com.cn.kvn.mock.local.config_mock.MockByHttpXmlItem"  
+						p:mockedMethodFullPath="com.kvn.service.ServiceA#method_17()" />  
 
 
 ## II. server-mock
