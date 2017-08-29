@@ -1,16 +1,20 @@
 package com.cn.kvn.mock.local.domain;
 
-import java.lang.reflect.Method;
-
 import com.alibaba.fastjson.JSON;
 import com.cn.kvn.mock.local.exception.LocalMockErrorCode;
 import com.cn.kvn.mock.local.processor.MockProcessor;
+import org.aspectj.lang.ProceedingJoinPoint;
+
+import java.lang.reflect.Method;
 
 /**
  * @author wzy
  * @date 2017年6月19日 下午2:08:07
  */
 public abstract class MockItem {
+	/** 被 mock 的方法的切点 */
+	protected ProceedingJoinPoint pjp;
+
 	/** 被mock的class，即真实的class */
 	protected Class<?> mockedClass;
 
@@ -77,4 +81,11 @@ public abstract class MockItem {
 		this.mockedMethod = mockedMethod;
 	}
 
+	public ProceedingJoinPoint getPjp() {
+		return pjp;
+	}
+
+	public void setPjp(ProceedingJoinPoint pjp) {
+		this.pjp = pjp;
+	}
 }

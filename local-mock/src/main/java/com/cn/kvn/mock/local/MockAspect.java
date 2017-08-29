@@ -1,20 +1,19 @@
 package com.cn.kvn.mock.local;
 
-import java.lang.reflect.Method;
-
-import javax.annotation.Resource;
-
+import com.alibaba.fastjson.JSON;
+import com.cn.kvn.mock.local.annotation_mock.MockBy;
+import com.cn.kvn.mock.local.annotation_mock.MockReturn;
+import com.cn.kvn.mock.local.domain.MockReturnItem;
+import com.cn.kvn.mock.local.processor.MockProcessor;
+import com.cn.kvn.mock.local.processor.MockProcessorFactory;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 
-import com.alibaba.fastjson.JSON;
-import com.cn.kvn.mock.local.annotation_mock.MockBy;
-import com.cn.kvn.mock.local.annotation_mock.MockReturn;
-import com.cn.kvn.mock.local.processor.MockProcessor;
-import com.cn.kvn.mock.local.processor.MockProcessorFactory;
+import javax.annotation.Resource;
+import java.lang.reflect.Method;
 
 /**
  * Mock服务切面，用于提供Mock服务。
@@ -28,7 +27,7 @@ public class MockAspect implements InitializingBean {
 	/**
 	 * 使用 @MockReturn("RANDOM_EXCEPTION") 时，出现异常的频率
 	 * 
-	 * @see #transformReturnValue(MockReturn, Class, Method)
+	 * @see com.cn.kvn.mock.local.processor.MockReturnProcessor#transformReturnValue(MockReturnItem, Class, Method)
 	 */
 	private int randomExpRate = 3;
 
@@ -76,7 +75,7 @@ public class MockAspect implements InitializingBean {
 		MethodSignature ms = (MethodSignature) pjp.getSignature();
 		Method method = ms.getMethod();
 
-		MockProcessor mockProcessor = mockProcessorFactory.getMatchedProcessor(method);
+		MockProcessor mockProcessor = mockProcessorFactory.getMatchedProcessor(method, pjp);
 		if (mockProcessor == null) {
 			return pjp.proceed();
 		}

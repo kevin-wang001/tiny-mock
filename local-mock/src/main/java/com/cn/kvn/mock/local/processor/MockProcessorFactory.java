@@ -3,6 +3,7 @@ package com.cn.kvn.mock.local.processor;
 import com.cn.kvn.mock.local.MockConfig;
 import com.cn.kvn.mock.local.domain.MockItem;
 import com.cn.kvn.mock.local.exception.LocalMockErrorCode;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 
@@ -56,13 +57,17 @@ public final class MockProcessorFactory implements InitializingBean {
 		throw LocalMockErrorCode.MOCKRITEM_NOT_SUPPORT.exp(mockItemClass.getName());
 	}
 
+	/**
+	 * 获取此方法对应的 processor，同时将原始切点 ProceedingJoinPoint 保存到 MockItem 中，方便以后扩展
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public MockProcessor getMatchedProcessor(Method method) {
+	public MockProcessor getMatchedProcessor(Method method, ProceedingJoinPoint pjp) {
 		MockItem mi = MockConfig.getAndSetMockItem(method);
 		
 		if(mi == null){
 			return null;
 		}
+		mi.setPjp(pjp);
 		
 		// 通过MockItem获取MockProcessor的class，从而获取MockProcessor
 		Class processorClass = mi.getProcessorClass();
