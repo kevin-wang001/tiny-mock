@@ -1,9 +1,11 @@
 package mock.com.kvn.service;
 
-import org.springframework.stereotype.Service;
-
 import com.alibaba.fastjson.JSON;
+import com.cn.kvn.mock.local.MockConfig;
+import com.cn.kvn.mock.local.domain.MockItem;
 import com.kvn.domain.Foo;
+import com.kvn.service.ServiceA;
+import org.springframework.stereotype.Service;
 
 /**
  * @author wzy on 2017/6/1.
@@ -11,8 +13,11 @@ import com.kvn.domain.Foo;
 @Service
 public class MockServiceA {
 
-    public String mockMethod_4() {
+
+    public String mockMethod_4() throws Throwable {
+        MockItem mi = MockConfig.getMockItem(ServiceA.class.getMethod("method_4"));
         System.out.println("执行mock方法：mockMethod_4");
+        System.out.println("mockMethod_4代理执行原始方法：" + mi.getPjp().proceed());
         return "mockMethod_4返回值";
     }
 
