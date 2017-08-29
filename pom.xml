@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.cn.kvn.tiny-mock</groupId>
 	<artifactId>tiny-mock</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>mock-common</module>
@@ -26,7 +26,6 @@
 		<jsp.api.version>2.0</jsp.api.version>
 		<asm.version>4.0</asm.version>
 		<junit.version>4.10</junit.version>
-		<mock.version>1.0.0</mock.version>
 	</properties>
 
 
@@ -35,12 +34,12 @@
 			<dependency>
 				<groupId>com.cn.kvn.tiny-mock</groupId>
 				<artifactId>mock-common</artifactId>
-				<version>${mock.version}</version>
+				<version>1.0.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.cn.kvn.tiny-mock</groupId>
 				<artifactId>local-mock</artifactId>
-				<version>${mock.version}</version>
+				<version>1.0.2</version>
 			</dependency>
 
 			<dependency>

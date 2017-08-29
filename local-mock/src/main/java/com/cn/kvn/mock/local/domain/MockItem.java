@@ -12,8 +12,8 @@ import java.lang.reflect.Method;
  * @date 2017年6月19日 下午2:08:07
  */
 public abstract class MockItem {
-	/** 被 mock 的方法的切点 */
-	protected ProceedingJoinPoint pjp;
+	/** 被 mock 的方法的切点。用ThreadLocal线程隔离，防止并发问题。 */
+	protected ThreadLocal<ProceedingJoinPoint> pjp = new ThreadLocal<>();
 
 	/** 被mock的class，即真实的class */
 	protected Class<?> mockedClass;
@@ -82,10 +82,16 @@ public abstract class MockItem {
 	}
 
 	public ProceedingJoinPoint getPjp() {
-		return pjp;
+		return pjp.get();
 	}
 
 	public void setPjp(ProceedingJoinPoint pjp) {
-		this.pjp = pjp;
+		if(this.pjp.get() == null){
+			synchronized (this.pjp) {
+				if(this.pjp.get() == null){
+					this.pjp.set(pjp);
+				}
+			}
+		}
 	}
 }
