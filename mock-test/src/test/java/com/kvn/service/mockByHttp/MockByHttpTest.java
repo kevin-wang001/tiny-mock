@@ -9,7 +9,9 @@ import org.junit.Test;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.kvn.SpringBaseTest;
+import com.kvn.domain.DataResponse;
 import com.kvn.domain.Foo;
+import com.kvn.domain.RefundOrderVo;
 import com.kvn.service.ServiceA;
 
 /**
@@ -65,7 +67,11 @@ public class MockByHttpTest extends SpringBaseTest {
 	}
 	
 	
-	
+	@Test
+	public void testMockByHttpWithRap() {
+		DataResponse<RefundOrderVo> rlt = serviceA.method_rap();
+		System.out.println(JSON.toJSONString(rlt));
+	}
 	
 	/***********************************xml config************************************/
 	@Test

@@ -8,7 +8,9 @@ import com.alibaba.fastjson.JSON;
 import com.cn.kvn.mock.local.annotation_mock.MockBy;
 import com.cn.kvn.mock.local.annotation_mock.MockByHttp;
 import com.cn.kvn.mock.local.annotation_mock.MockReturn;
+import com.kvn.domain.DataResponse;
 import com.kvn.domain.Foo;
+import com.kvn.domain.RefundOrderVo;
 
 /**
  * @author wzy  2016年7月20日上午10:19:55
@@ -175,6 +177,12 @@ public class ServiceA {
 	@MockByHttp
 	public List<Foo> method_21(String msg, List<Foo> ls) {
 		System.out.println("执行真实方法：method_21");
+		return null;
+	}
+	
+	@MockByHttp(serverPath="http://172.16.21.28/mockjsdata/35/refund/api/query/queryRefundInfo")
+	public DataResponse<RefundOrderVo> method_rap() {
+		System.out.println("执行真实方法：method_22");
 		return null;
 	}
 	
