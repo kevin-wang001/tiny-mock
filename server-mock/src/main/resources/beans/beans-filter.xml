@@ -8,6 +8,7 @@
 				<bean class="org.springframework.web.filter.CharacterEncodingFilter" p:encoding="UTF-8" />
 				<!-- 需要在web.xml中配置filter : DelegatingFilterProxy -->
 				<bean class="com.kvn.mock.server.framework.filter.HttpServletHolderFilter"/>
+				<bean class="com.kvn.mock.server.framework.filter.LoggerMDCFilter"/>
 				<bean class="com.kvn.mock.server.framework.filter.PageDigestFilter"/>
 			</list>
 		</property>
