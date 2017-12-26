@@ -10,10 +10,6 @@
 	<packaging>war</packaging>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.cn.kvn.tiny-mock</groupId>
-			<artifactId>mock-common</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>com.alibaba</groupId>

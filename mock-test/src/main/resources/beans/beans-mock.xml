@@ -9,7 +9,7 @@
 	<import resource="classpath:tiny-mock/local-mock.xml" />
 
 	<!-- mock切面配置 -->
-	<bean id="mockAspect" class="com.cn.kvn.mock.local.MockAspect"
+	<bean id="mockAspect" class="com.kvn.mock.local.MockAspect"
 		p:openMock="true" p:needCache="true" p:randomExpRate="4" />
 
 	<aop:config>
@@ -22,17 +22,17 @@
 
 	<!-- 如果只使用mock注解，下面可以不配置。如果要使用配置类型的mock，使用下面注解 -->
 	<!-- spring 内部bean是prototype的，所以不用担心MockItem的bean被后面的覆盖，因此可以不配置 scope="prototype" -->
-	<bean class="com.cn.kvn.mock.local.MockConfig">
+	<bean class="com.kvn.mock.local.MockConfig">
 		<property name="mockReturnItemList">
 			<list>
-				<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
+				<bean class="com.kvn.mock.local.config_mock.MockReturnXmlItem"
 					p:mockedMethodFullPath="com.kvn.service.ServiceA#method_12()"
 					p:returnValue="RANDOM()" />
-				<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
+				<bean class="com.kvn.mock.local.config_mock.MockReturnXmlItem"
 					p:mockedMethodFullPath="com.kvn.service.ServiceA#method_13()"
 					p:returnValue="123" />
 
-				<bean class="com.cn.kvn.mock.local.config_mock.MockReturnXmlItem"
+				<bean class="com.kvn.mock.local.config_mock.MockReturnXmlItem"
 					p:mockedMethodFullPath="com.kvn.service.ServiceA#method_13(java.lang.String)"
 					p:returnValue="456" />
 			</list>
@@ -41,10 +41,10 @@
 		<property name="mockByItemList">
 			<list>
 				<!-- 使用默认的delegateMethodFullPath。 默认是指定默认指定[mock类全路径 = "mock." + 真实类的包名 + ".Mock" + 真实类的类名] -->
-				<bean class="com.cn.kvn.mock.local.config_mock.MockByXmlItem"
+				<bean class="com.kvn.mock.local.config_mock.MockByXmlItem"
 					p:mockedMethodFullPath="com.kvn.service.ServiceA#method_22(java.lang.String,com.kvn.domain.Foo)" />
 
-				<bean class="com.cn.kvn.mock.local.config_mock.MockByXmlItem"
+				<bean class="com.kvn.mock.local.config_mock.MockByXmlItem"
 					p:mockedMethodFullPath="com.kvn.service.ServiceA#method_14(java.lang.String,com.kvn.domain.Foo)"
 					p:delegateMethodFullPath="mock.com.kvn.service.MockServiceA#mockMethod_14(java.lang.String,com.kvn.domain.Foo)" />
 			</list>
@@ -54,7 +54,7 @@
 
 		<property name="mockByHttpItemList">
 			<list>
-				<bean class="com.cn.kvn.mock.local.config_mock.MockByHttpXmlItem"
+				<bean class="com.kvn.mock.local.config_mock.MockByHttpXmlItem"
 					p:mockedMethodFullPath="com.kvn.service.ServiceA#method_17()" />
 			</list>
 		</property>

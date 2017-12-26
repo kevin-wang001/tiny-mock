@@ -11,10 +11,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.cn.kvn.tiny-mock</groupId>
-			<artifactId>mock-common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.cn.kvn.tiny-mock</groupId>
 			<artifactId>local-mock</artifactId>
 		</dependency>
 

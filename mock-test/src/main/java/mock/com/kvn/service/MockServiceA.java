@@ -1,9 +1,9 @@
 package mock.com.kvn.service;
 
 import com.alibaba.fastjson.JSON;
-import com.cn.kvn.mock.local.MockConfig;
-import com.cn.kvn.mock.local.domain.MockItem;
 import com.kvn.domain.Foo;
+import com.kvn.mock.local.MockConfig;
+import com.kvn.mock.local.domain.MockItem;
 import com.kvn.service.ServiceA;
 import org.springframework.stereotype.Service;
 

@@ -5,11 +5,11 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 							http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<bean id="mockReturnProcessor" class="com.cn.kvn.mock.local.processor.MockReturnProcessor" />
-	<bean id="mockByProcessor" class="com.cn.kvn.mock.local.processor.MockByProcessor" />
-	<bean id="mockByHttpProcessor" class="com.cn.kvn.mock.local.processor.MockByHttpProcessor" />
+	<bean id="mockReturnProcessor" class="com.kvn.mock.local.processor.MockReturnProcessor" />
+	<bean id="mockByProcessor" class="com.kvn.mock.local.processor.MockByProcessor" />
+	<bean id="mockByHttpProcessor" class="com.kvn.mock.local.processor.MockByHttpProcessor" />
 
-	<bean class="com.cn.kvn.mock.local.processor.MockProcessorFactory">
+	<bean class="com.kvn.mock.local.processor.MockProcessorFactory">
 		<property name="mockProcessorList">
 			<list>
 				<ref bean="mockReturnProcessor" />
