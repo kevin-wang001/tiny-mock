@@ -2,7 +2,7 @@
 <configuration scan="true" scanPeriod="30 seconds" debug="false">
 	<property name="log.base" value="logs" />
 	<property name="log.proj" value="app" />
-	<property name="logPattern" value="%date|%thread|%X{uid}|%X{url}|%level{8}|%logger{60}:%line|%msg %ex ------%n"></property>
+	<property name="logPattern" value="%date|%thread|%level{8}|%logger{60}:%line|%msg %ex ------%n"></property>
 
 	<appender name="stdoutAppender" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">

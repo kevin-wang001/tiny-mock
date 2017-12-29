@@ -40,7 +40,7 @@
 
 		<property name="mockByItemList">
 			<list>
-				<!-- 使用默认的delegateMethodFullPath。 默认是指定默认指定[mock类全路径 = "mock." + 真实类的包名 + ".Mock" + 真实类的类名] -->
+				<!-- 使用默认的delegateMethodFullPath。 默认指定[mock类全路径 = "mock." + 真实类的包名 + ".Mock" + 真实类的类名]，mock方法名与原方法名相同-->
 				<bean class="com.kvn.mock.local.config_mock.MockByXmlItem"
 					p:mockedMethodFullPath="com.kvn.service.ServiceA#method_22(java.lang.String,com.kvn.domain.Foo)" />
 
